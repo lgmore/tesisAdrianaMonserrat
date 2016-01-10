@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2015-10-10T17:34:47</date>
+  <millis>1444512887792</millis>
+  <sequence>1</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.smpso.SMPSOTesis_main</class>
+  <method>main</method>
+  <thread>10</thread>
+  <message>Tiempo total: 25848 ms</message>
+</record>
+<record>
+  <date>2015-10-10T17:34:47</date>
+  <millis>1444512887793</millis>
+  <sequence>2</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.smpso.SMPSOTesis_main</class>
+  <method>main</method>
+  <thread>10</thread>
+  <message>Objectives values have been writen to file FUN</message>
+</record>
+<record>
+  <date>2015-10-10T17:34:47</date>
+  <millis>1444512887998</millis>
+  <sequence>4</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.core.SolutionSet</class>
+  <method>printObjectivesToFile</method>
+  <thread>10</thread>
+  <message>cantidad de registros insertados: 1</message>
+</record>
+<record>
+  <date>2015-10-10T17:34:47</date>
+  <millis>1444512887999</millis>
+  <sequence>5</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.smpso.SMPSOTesis_main</class>
+  <method>main</method>
+  <thread>10</thread>
+  <message>Variables values have been writen to file VAR</message>
+</record>
+</log>
