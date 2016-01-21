@@ -26,11 +26,12 @@ disp('Connection OK');
 pause(1);
 while iterar
     DataReceived=[];
-    tic
+
     while (t.BytesAvailable > 0)
-        
+        tic
         DataReceived=fscanf(t);
-               
+        toc
+        
     end
     %recibir los parametros, procesar la imagen y devolver los valores
     %de entropia de las imagenes y ssim para evaluacion
@@ -38,21 +39,19 @@ while iterar
         DataReceived=[];
     else
         C = strsplit(DataReceived,',');
-        nombreimagen= C{1};
-        ventanaX=str2double(C{2});
-        ventanaY=str2double(C{3});
-        clipLimit=str2double(C{4});
+        nombreimagen= C(1);
+        ventanaX=C(2);
+        ventanaY=C(3);
+        clipLimit=C(4);
 
         %escribir la respuesta de la implementacion
         [entropiaOrig,entropiaEnhanced,ltg]=pruebaJava(nombreimagen, ventanaX, ventanaY, clipLimit);
-        formatSpec = '%f,%f,%f';
-        DataToSend= sprintf(formatSpec,entropiaOrig,entropiaEnhanced,ltg);
+        DataToSend=
         fwrite(t,DataToSend);
         %pause (0.5);
         DataReceived=[];
     end
-    %se controla el tiempo desde que inicia hasta que termina
-    toc
+    
 end
 
 
