@@ -8,7 +8,7 @@ import jmetal.encodings.solutionType.IntRealSolutionType;
 import jmetal.metaheuristics.smpso.SMPSOTesis_main;
 //import static jmetal.problems.tesis.TM.proxy;
 import jmetal.util.JMException;
-import matlabcontrol.MatlabInvocationException;
+//import matlabcontrol.MatlabInvocationException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -31,11 +31,11 @@ public class Tesis extends Problem {
     static {
         PropertyConfigurator.configure("logger.properties");
         log = Logger.getLogger(Tesis.class.getName());
-        setDimensionesImagen();
+//        setDimensionesImagen();
 
     }
 
-    public Tesis() {
+    public Tesis(int cantidadFilas, int cantidadColumnas) {
 //        getImagenOriginal();
         cantidadVarInt = 2;
         cantidadVarReal = 1;
@@ -46,49 +46,52 @@ public class Tesis extends Problem {
         upperLimit_ = new double[numeroDeVariables];
         lowerLimit_ = new double[numeroDeVariables];
         lowerLimit_[0] = 2;
-        upperLimit_[0] = filas;
+        //upperLimit_[0] = filas;
+        upperLimit_ [0] = cantidadFilas;
         lowerLimit_[1] = 2;
-        upperLimit_[1] = columnas;
+        //upperLimit_[1] = columnas;
+        upperLimit_[1] = cantidadColumnas;
         lowerLimit_[2] = 0;
         //upperLimit_[2] = 256;
         upperLimit_[2] = 1;
         tipoSolucion = new IntRealSolutionType(this, 2, 1);
         //mediaGlobalOriginal = getMediaGlobal(imagen,filas,columnas);
     }
-
-    public static void setDimensionesImagen() {
-        try {
-
-            String nombreImagen = SMPSOTesis_main.nombreImagen;
-            StringBuilder comando = new StringBuilder();
-
-            comando.append("[e , c] = getDimensionesImagen(")
-                    .append("'").append(nombreImagen).append("')");
-            SMPSOTesis_main.proxy.setVariable("e", 0);
-            SMPSOTesis_main.proxy.setVariable("c", 0);
-
-            log.info("ejecucion: " + comando.toString());
-            SMPSOTesis_main.proxy.eval(comando.toString());
-
-            double dimensionx = ((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
-            double dimensiony = ((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
-
-            log.info("dim x: " + dimensionx);
-            log.info("dim y: " + dimensiony);
-            
-            filas = (int) dimensionx;
-            columnas = (int) dimensiony;
-
-        } catch (MatlabInvocationException ex) {
-            java.util.logging.Logger.getLogger(Problem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }
+//
+//    public static void setDimensionesImagen() {
+//        try {
+//
+//            String nombreImagen = SMPSOTesis_main.nombreImagen;
+//            StringBuilder parametros = new StringBuilder();
+//
+//            parametros.append(nombreImagen).append(",");
+//            //comando.append("[e , c] = getDimensionesImagen(")
+//            //        .append("'").append(nombreImagen).append("')");
+//            //SMPSOTesis_main.proxy.setVariable("e", 0);
+//            //SMPSOTesis_main.proxy.setVariable("c", 0);
+//
+//            log.info("ejecucion: " + parametros.toString());
+//            SMPSOTesis_main.proxy.eval(comando.toString());
+//
+//            double dimensionx = ((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
+//            double dimensiony = ((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
+//
+//            log.info("dim x: " + dimensionx);
+//            log.info("dim y: " + dimensiony);
+//            
+//            filas = (int) dimensionx;
+//            columnas = (int) dimensiony;
+//
+//        } catch (MatlabInvocationException ex) {
+//            java.util.logging.Logger.getLogger(Problem.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//
+//    }
 
     @Override
     public void evaluate(Solution solution) throws JMException {
-        try {
+//        try {
 //            Variable[] variables = solution.getDecisionVariables();
 //            double [] fx = new double[3];
 //            fx[0] = variables[0].getValue();
@@ -99,20 +102,27 @@ public class Tesis extends Problem {
             nombreImagen = SMPSOTesis_main.nombreImagen;
             StringBuilder comando = new StringBuilder();
 
-            comando.append("[e , c , l] = testMetricas(")
-                    .append("'").append(nombreImagen).append("',")
+            comando.append(nombreImagen).append(",")
                     .append(solution.getDecisionVariables()[0]).append(",")
                     .append(solution.getDecisionVariables()[1]).append(",")
-                    .append(solution.getDecisionVariables()[2]).append(")");
-            SMPSOTesis_main.proxy.setVariable("e", 0);
-            SMPSOTesis_main.proxy.setVariable("c", 0);
-            SMPSOTesis_main.proxy.setVariable("l", 0);
+                    .append(solution.getDecisionVariables()[2]).append("\n")
+                    ;
+//            comando.append("[e , c , l] = testMetricas(")
+//                    .append("'").append(nombreImagen).append("',")
+//                    .append(solution.getDecisionVariables()[0]).append(",")
+//                    .append(solution.getDecisionVariables()[1]).append(",")
+//                    .append(solution.getDecisionVariables()[2]).append(")");
+//            SMPSOTesis_main.proxy.setVariable("e", 0);
+//            SMPSOTesis_main.proxy.setVariable("c", 0);
+//            SMPSOTesis_main.proxy.setVariable("l", 0);
             log.info("ejecucion: " + comando.toString());
-            SMPSOTesis_main.proxy.eval(comando.toString());
+            //SMPSOTesis_main.proxy.eval(comando.toString());
+            String resultadoSocket = SMPSOTesis_main.canalSocket.enviarMensaje(comando.toString());
+            double[] resultados = doDecodeRespuesta(resultadoSocket);
 
-            double entropiaOrig = ((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
-            double entropiaClahe = ((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
-            double ltg = ((double[]) SMPSOTesis_main.proxy.getVariable("l"))[0];
+            double entropiaOrig = resultados[0];//((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
+            double entropiaClahe = resultados[1];//((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
+            double ltg = resultados[2];//((double[]) SMPSOTesis_main.proxy.getVariable("l"))[0];
             log.info("entropia original: " + entropiaOrig);
             log.info("entropia clahe: " + entropiaClahe);
             log.info("ltg: " + ltg);
@@ -136,9 +146,9 @@ public class Tesis extends Problem {
 //            solution.setObjective(0, entropiaClahe);
             //solution.setObjective(1, difMedia);
 //            solution.setObjective(1, ssim);
-        } catch (MatlabInvocationException ex) {
-            log.error(ex.getMessage());
-        }
+//        } catch (MatlabInvocationException ex) {
+//            log.error(ex.getMessage());
+//        }
     }
     /*@Override
      public void evaluate(Solution solution) throws JMException {
@@ -229,4 +239,14 @@ public class Tesis extends Problem {
 //        }catch(Exception e){}
 //        return null;
 //    }
+
+    private double[] doDecodeRespuesta(String resultadoSocket) {
+        double [] resultado = new double [3];
+        String [] misplit = resultadoSocket.split(",");
+        for (int i = 0; i<3; i++){
+            resultado[i]= Double.valueOf(misplit[i]);
+        }
+        
+        return resultado;
+    }
 }

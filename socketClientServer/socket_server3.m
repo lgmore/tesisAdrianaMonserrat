@@ -25,8 +25,9 @@ fopen(t);
 disp('Connection OK');
 pause(1);
 while iterar
-    DataReceived=[];
     tic
+    DataReceived=[];
+    %tic
     while (t.BytesAvailable > 0)
         
         DataReceived=fscanf(t);

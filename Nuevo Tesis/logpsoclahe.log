@@ -529,3 +529,83 @@
 2015-10-10 17:34:47 INFO  Tesis:116 - entropia original: 7.442777498902817
 2015-10-10 17:34:47 INFO  Tesis:117 - entropia clahe: 5.4316965489824405
 2015-10-10 17:34:47 INFO  Tesis:118 - ltg: 0.5550849477991376
+2016-01-25 21:08:02 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,2,2,0.7634320461221243
+2016-01-25 21:08:56 INFO  Tesis:124 - entropia original: 7.750197
+2016-01-25 21:08:57 INFO  Tesis:125 - entropia clahe: 7.962316
+2016-01-25 21:08:57 INFO  Tesis:126 - ltg: 0.687997
+2016-01-25 21:09:42 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,0,0,0.7634320461221243
+2016-01-25 21:10:50 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,2,2,0.6591592303036387
+
+2016-01-25 21:10:52 INFO  Tesis:124 - entropia original: 7.750197
+2016-01-25 21:10:52 INFO  Tesis:125 - entropia clahe: 7.962316
+2016-01-25 21:10:52 INFO  Tesis:126 - ltg: 0.687997
+2016-01-25 21:10:52 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,0,0,0.6591592303036387
+
+2016-01-25 21:49:37 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,2,2,0.09211989066355786
+
+2016-01-25 21:49:39 INFO  Tesis:124 - entropia original: 7.750197
+2016-01-25 21:49:39 INFO  Tesis:125 - entropia clahe: 7.962316
+2016-01-25 21:49:39 INFO  Tesis:126 - ltg: 0.687997
+2016-01-25 21:49:39 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,0,0,0.09211989066355786
+
+2016-01-25 21:50:17 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,2,2,0.7834391469871934
+
+2016-01-25 21:50:20 INFO  Tesis:124 - entropia original: 7.750197
+2016-01-25 21:50:20 INFO  Tesis:125 - entropia clahe: 7.962316
+2016-01-25 21:50:20 INFO  Tesis:126 - ltg: 0.687997
+2016-01-25 21:53:20 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,0,0,0.7834391469871934
+
+2016-01-25 22:07:03 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,2,2,0.4407733649974369
+
+2016-01-25 22:07:06 INFO  Tesis:124 - entropia original: 7.750197
+2016-01-25 22:07:06 INFO  Tesis:125 - entropia clahe: 7.962316
+2016-01-25 22:07:06 INFO  Tesis:126 - ltg: 0.687997
+2016-01-25 22:07:06 INFO  Tesis:116 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,0,0,0.4407733649974369
+
+2016-01-26 16:24:52 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,423,360,0.6136608611303873
+
+2016-01-26 16:25:34 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:25:34 INFO  Tesis:127 - entropia clahe: 3.438178
+2016-01-26 16:25:34 INFO  Tesis:128 - ltg: 0.473189
+2016-01-26 16:26:50 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,423,360,0.6136608611303873
+
+2016-01-26 16:27:25 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:27:25 INFO  Tesis:127 - entropia clahe: 3.438178
+2016-01-26 16:27:25 INFO  Tesis:128 - ltg: 0.473189
+2016-01-26 16:27:54 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,330,96,0.3108174916688786
+
+2016-01-26 16:28:03 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:28:03 INFO  Tesis:127 - entropia clahe: 6.371513
+2016-01-26 16:28:03 INFO  Tesis:128 - ltg: 0.459814
+2016-01-26 16:28:03 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,330,96,0.3108174916688786
+
+2016-01-26 16:28:13 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:28:13 INFO  Tesis:127 - entropia clahe: 6.371513
+2016-01-26 16:28:13 INFO  Tesis:128 - ltg: 0.459814
+2016-01-26 16:31:51 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,64,77,0.932563983284405
+
+2016-01-26 16:31:55 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:31:55 INFO  Tesis:127 - entropia clahe: 7.896873
+2016-01-26 16:31:55 INFO  Tesis:128 - ltg: 0.450338
+2016-01-26 16:31:55 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,64,77,0.932563983284405
+
+2016-01-26 16:31:57 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:31:57 INFO  Tesis:127 - entropia clahe: 7.896873
+2016-01-26 16:31:58 INFO  Tesis:128 - ltg: 0.450338
+2016-01-26 16:36:11 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,287,379,0.6317913732632627
+
+2016-01-26 16:36:42 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:36:42 INFO  Tesis:127 - entropia clahe: 3.441989
+2016-01-26 16:36:42 INFO  Tesis:128 - ltg: 0.447445
+2016-01-26 16:36:42 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,287,379,0.6317913732632627
+
+2016-01-26 16:37:05 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,371,425,0.0060378393167481725
+
+2016-01-26 16:37:38 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:37:38 INFO  Tesis:127 - entropia clahe: 3.356161
+2016-01-26 16:37:38 INFO  Tesis:128 - ltg: 0.462591
+2016-01-26 16:37:38 INFO  Tesis:118 - ejecucion: I:\tesisAdrianaMonserrat2\tesisAdrianaMonserrat\imagenesPrueba\Lenna.png,371,425,0.0060378393167481725
+
+2016-01-26 16:38:12 INFO  Tesis:126 - entropia original: 7.750197
+2016-01-26 16:38:12 INFO  Tesis:127 - entropia clahe: 3.356161
+2016-01-26 16:38:12 INFO  Tesis:128 - ltg: 0.462591

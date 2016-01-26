@@ -2,12 +2,6 @@ package jmetal.core;
 
 import jmetal.util.JMException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jmetal.metaheuristics.smpso.SMPSOTesis_main;
-import jmetal.problems.tesis.Tesis;
-import matlabcontrol.MatlabInvocationException;
-import org.apache.log4j.PropertyConfigurator;
 
 public abstract class Problem implements Serializable {
 

@@ -56,9 +56,9 @@ public class SMPSOTesis extends Algorithm {
     public SMPSOTesis(Problem problema) {
         super(problema);
         r1Max_ = 1.0;//numero aleatorio 1 maximo 1
-        r1Min_ = 0.0;//numero aleatorio 1 minimo 0
+        r1Min_ = 0.0001;//numero aleatorio 1 minimo 0
         r2Max_ = 1.0;//numero aleatorio 2 maximo 1
-        r2Min_ = 0.0;//numero aleatorio 2 minimo 0
+        r2Min_ = 0.0001;//numero aleatorio 2 minimo 0
         C1Max_ = 2.5;//constante de aceleracion 1 maximo 2.5
         C1Min_ = 1.5;//constante de aceleracion 1 minimo 1.5
         C2Max_ = 2.5;//constante de aceleracion 2 maximo 2.5
