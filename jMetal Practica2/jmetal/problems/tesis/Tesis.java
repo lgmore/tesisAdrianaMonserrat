@@ -59,7 +59,7 @@ public class Tesis extends Problem {
     }
 //
 //    public static void setDimensionesImagen() {
-//        try {
+//        try {asfasdfadsfadsfadsf
 //
 //            String nombreImagen = SMPSOTesis_main.nombreImagen;
 //            StringBuilder parametros = new StringBuilder();
