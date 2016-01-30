@@ -24,8 +24,9 @@ disp('Waiting for connection');
 fopen(t);
 disp('Connection OK');
 pause(1);
+
 while iterar
-    tic
+    
     DataReceived=[];
     %tic
     while (t.BytesAvailable > 0)
@@ -38,6 +39,7 @@ while iterar
     if (isempty(DataReceived))
         DataReceived=[];
     else
+        
         C = strsplit(DataReceived,',');
         nombreimagen= C{1};
         ventanaX=str2double(C{2});
@@ -45,15 +47,24 @@ while iterar
         clipLimit=str2double(C{4});
 
         %escribir la respuesta de la implementacion
+        fprintf('X: %d Y:%d C: %d',ventanaX, ventanaY, clipLimit);
+        
+        
+        
+        
         [entropiaOrig,entropiaEnhanced,ltg]=pruebaJava(nombreimagen, ventanaX, ventanaY, clipLimit);
+        
         formatSpec = '%f,%f,%f';
+        
         DataToSend= sprintf(formatSpec,entropiaOrig,entropiaEnhanced,ltg);
+        
         fwrite(t,DataToSend);
         %pause (0.5);
         DataReceived=[];
+        
     end
     %se controla el tiempo desde que inicia hasta que termina
-    toc
+    
 end
 
 

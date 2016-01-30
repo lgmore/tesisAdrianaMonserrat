@@ -47,10 +47,10 @@ public class Tesis extends Problem {
         lowerLimit_ = new double[numeroDeVariables];
         lowerLimit_[0] = 2;
         //upperLimit_[0] = filas;
-        upperLimit_ [0] = cantidadFilas;
+        upperLimit_ [0] = Math.round(cantidadFilas/2);
         lowerLimit_[1] = 2;
         //upperLimit_[1] = columnas;
-        upperLimit_[1] = cantidadColumnas;
+        upperLimit_[1] = Math.round(cantidadColumnas/2);
         lowerLimit_[2] = 0;
         //upperLimit_[2] = 256;
         upperLimit_[2] = 1;
