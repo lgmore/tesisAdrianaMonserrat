@@ -1,0 +1,5 @@
+(1)R. Garg, B. Mittal and S. Garg, Histogram Equalization Techniques for
+Image Enhancement, International Journal of Electronics and
+Communi-cation Technology, vol. 2, pp. 107–111, 2011.
+(2) K. Zuiderveld, Contrast Limited Adaptive Histogram Equalization,
+Graphics Gems I”, Academic Press, 1994.

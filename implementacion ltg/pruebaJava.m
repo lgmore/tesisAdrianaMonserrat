@@ -28,13 +28,16 @@ else                            % image is indexed
     RGB = ind2rgb(im, map);
 end                             % now 'im' is a RGB-image 
 
-im2=RGB;
+%im2=RGB;
 %e1= entropy(im1);
-e1 = entropy(RGB);
-e2= entropy(im2);
+imgA = imread(img);
+e1 = entropy(imgA);
+e2= entropy(imgB);
+imshow(imgA); figure; imshow(imgB);
 % if((e2/e1)>=1)
 %     imwrite(imgB, fullfile('E:\Mis Documentos\imagenPrueba\ImagenesJavaLTG_2\', nombreArchivo));
 % end
 
 %ltg=ltg_index(im1,im2);
-ltg=ltg_index(RGB,im2); 
+ltg=ltg_index(imgA,imgB);
+fprintf(' resultados entropia original: %d entropia mejorada:%d ltg: %d',e1, e2, ltg);
