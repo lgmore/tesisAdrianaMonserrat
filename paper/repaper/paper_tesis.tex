@@ -57,22 +57,29 @@ SMPSO, CLAHE, Entropía, Entropía Local, SSIM, LTG, Mejora del Contraste, Optim
 %
 \section{Introducción}
 \label{sec:intro}
-
+%necesitamos citaciones sobre las distorsiones, algunos paper que hablen por lo menos brevemente del problema%
 Las imágenes digitales están expuestas a sufrir una variedad de distorsiones durante su procesamiento, compresión, almacenamiento, transmisión y reproducción, y cualquiera de ellas puede resultar en la degradación de la calidad visual.
-
-El principal objetivo de las técnicas de mejora es procesar una imagen de forma que resulte más adecuada que la original para una aplicación específica. Existen muchas técnicas de Mejoras de Contraste en el procesamiento de imágenes usadas para mejorar la apariencia de una imagen y hacerla más apta para la percepción visual humana. Una estrategia fundamental para la mayoría de las técnicas de Mejora de Contraste es la transformación del histograma. La técnica más usadas debido a su simplicidad y eficienca es la Ecualización del Histograma (HE). 	
+%citaciones sobre algunas de las técnicas existentes. Inclusive sería bueno especificar técnicas basadas en optimización%
+El principal objetivo de las técnicas de mejora es procesar una imagen de forma que resulte más adecuada que la original para una aplicación específica. Existen muchas técnicas de Mejora del Contraste en el procesamiento de imágenes usadas para mejorar la apariencia de una imagen y hacerla más apta para la percepción visual humana. Una estrategia fundamental para la mayoría de las técnicas de Mejora de Contraste es la transformación del histograma. La técnica más usada debido a su simplicidad y eficienca es la Ecualización del Histograma (HE). %esto se debe reescribir, porque estamos dando a entender que no se investigó suficiente sobre el tema
 
 Es de gran importancia realizar la Mejora del Contraste de imágenes de carácter médico, debido a que de esta manera es posible acentuar y mantener las características presentes en ellas. Las radiografías presentan características particulares de contraste, como en el caso de radiografías del tórax y mamografías, donde pueden existir diferencias de constraste notorias debido a las características de atenuación de los Rayos X \cite{chang1998image}.
 
-Los enfoques de mejora local demuestran ser sumamente útiles al momento de realzar detalles en imágenes médicas, y existen diversas propuestas que se centran en mejorar el contraste en radiografías \cite{1625082,4712472,5360176}. Debido a ello en esta  propuesta se estudia la comparación de la correlación de entre dos metricas, la entropía local vs. SSIM y la entropía local vs LTG.
+Los enfoques de mejora local demuestran ser sumamente útiles al momento de realzar detalles en imágenes médicas, y existen diversas propuestas que se centran en mejorar el contraste en radiografías \cite{1625082,4712472,5360176}. Debido a ello en esta  propuesta se estudia la comparación de la correlación de entre dos metricas, la entropía local vs. SSIM y la entropía local vs LTG. %vamos a reescribir, lo que vamos a plantear es que la selección de métricas debe basarse en qué tan contradictorios son los parámetros que se seleccionan%
 
  Se utilizará una metaheurística de optimización de objetivos, de manera a sintonizar los parámetros de entrada del algoritmo de mejora del contraste descripto en la sección \ref{sec:clahe}, de manera a obtener un grupo de imágenes contrastadas, las cuales serán evaluadas en cuanto a la ganancia de información proveída y distorsión introducida por la ecualización (sección \ref{sec:metricas}).
+
+%más o menos la mitad de las citaciones de los artículos van en la introducción, entonces se debe agregar más acá%
+
+%acá falta la parte que dice: en la sección 2 se analiza tal cosa, en la sección 3 se ve tal cosa, etc etc. Es super importante que agreguen todas las secciones que va a tener el paper, y después desarrollar, para que tengan una hoja de ruta%
+
+%lo que considero fundamental es que se distinga ya en la introducción, que este trabajo trata sobre el problema de selección de métricas para la optimización multiobjetivo de la mejora de contraste, y no sobre la optimización en sí%
 
 \section{Contrast Limited Adaptive Histogram Equalization (CLAHE)}
 \label{sec:clahe}
 Este enfoque de mejora de contraste presentado en \cite{Zuiderveld:1994:CLA:180895.180940} es una extensión del algoritmo original Adaptive Histogram Equalization (AHE) \cite{pizer1987adaptive}; en ambos métodos se implementa un enfoque de Ecualización del Histogama local basada en {\it Regiones Contextuales}, que representan porciones de la imagen, cuyas dimensiones están delimitadas por $(\mathcal{R}_x, \mathcal{R}_y)$, para realizar la ecualización por sectores de la imagen. Las inconsistencias entre fronteras de las secciones la imagen se corrigen aplicando un esquema de interpolación bilineal. 
-
 El algoritmo AHE original presenta problemas de amplificación del ruido, por tanto en CLAHE se implementa una limitación de la cantidad de pixeles que pueden alcanzar cierto nivel de gris dentro del histograma local; aquí se define el coeficiente {\it Clip Limit} $\mathcal{C}$, como un factor que está fuertemente relacionado con los contenidos del histograma. El mismo permite realizar cortes en picos del histograma local, que se traducen en ruido dentro de la imagen.
+
+%acá hay algo importante que creo que falta, hay que mostrar que clahe (y sus posibles variantes) son muy efectivas para realizar la mejora del contraste en imágenes médicas; además podemos agregar alguna grafiquita, porque de otra forma queda muy escueto%
 
 \section{métricas de evaluación}
 \label{sec:metricas}
@@ -139,7 +146,7 @@ Donde:
  \item  $I_{m}$ y $Q_{m}$ = contienen la información de crominancia de las imagenes. 
 \end{itemize} 
 
-
+%Ésto vamos a poner en una sección aparte, hay que hacer hincapié en que el problema que se resuelve es la selección de métricas, y ésta es la herramienta que se usa para medir qué tan contradictorias son las métricas%
 \subsection{Correlación de Pearson}
 \label{ssec:correlacion}
 Es un índice que puede utilizarse para medir el grado de relación o covariación de dos variables distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas.
