@@ -102,7 +102,14 @@ Donde $\mathcal{P}_i$ es la probabilidad de ocurrencias del nivel de gris $i$ en
 
 \subsection{Entropía Local}
 \label{ssec:entropialocal}
+La Entropía Local representa la diferencia entre dos distribuciones de probabilidad en un mismo espacio. Está relacionado con la variación de los niveles de gris en la vecindad de un pixel. La Entropía Local divide la imagen en regiones separadas y luego analiza cada región como fuente informacíon separada.
+Si se define una pequeña vecindad $\Omega_k$ de tamaño $M_k$ $X$ $N_k$ de la imagen, entonces la entropía de $\Omega_k$ queda definida como:
 
+\begin{equation}\label{eq:entropialocal}
+ \mathscr E{(\Omega_k)}=\sum_{j=0}^{G-1}\mathcal P_j log_2(\frac{1}{P}_j)
+\end{equation}
+
+donde $\mathcal P_j=\frac{n_j}{M_k X N_k}$ denota la probabilidad del nivel de gris de $j$ en la vecindad  $\Omega_k$, $n_j$ es la cantidad de píxeles con nivel de gris $j$ en  $\Omega_k$ y E ($\Omega_k$), la entropía local de  $\Omega_k$.
 
 \subsection{Índice de similitud estructural (SSIM)}
 \label{ssec:ssim}
@@ -249,9 +256,9 @@ La interacción entre CLAHE y las partículas de SMPSO se muestran en la \textbf
 %   \captionof{figure}{Interacción entre CLAHE y SMPSO.}
 % \end{minipage}
 
- \twocolumn
- \bibliographystyle{IEEEbib}
- \bibliography{refs1}
+% \twocolumn
+% \bibliographystyle{IEEEbib}
+% \bibliography{refs1}
 
 
 
