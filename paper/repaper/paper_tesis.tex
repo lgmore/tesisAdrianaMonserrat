@@ -282,6 +282,265 @@ El \textbf{Algoritmo \ref{alg:pso_clahe}} muestra cómo se implementa la propues
 
 La interacción entre CLAHE y las partículas de SMPSO se muestran en la \textbf {Fig. 1}. CLAHE recibe como parámetros de entrada los valores almacenados por una partícula $(\mathcal{R}_x,\mathcal{R}_y, \mathscr{C})$ y la imagen original $I$, y a la imagen procesada se le calculan las métricas $\mathscr{H}$ y $SSIM$  o $LTG$ de manera a obtener las funciones objetivo. Las soluciones no dominadas se almacenan en el conjunto pareto. Éste proceso se repite hasta alcanzar un criterio de parada definido.
 
+
+\section{resultados y discusión}
+\label{sec:resultadosdiscusion}
+
+Para la ejecución se utilizaron como hardware:
+Una computadora de escritorio con procesador Intel Core i5 de cuatro núcleos, con 8 GB de memoria RAM, y sistema operativo Windows 7 de 64 bits. 
+Una computadora de escritorio con procesador Intel Core i5 de cuatro núcleo, con 4 GB de memoria RAM, y sistema operativo Windows 7 de 64 bits.
+%Una laptop con procesador Intel Core i5 de cuatro núcleo, con 8 GB de memoria RAM, y sistema operativo Windows 10 de 64 bits.
+
+Las pruebas se realizaron empleando {\color{red} 20} imágenes radiológicas previamente digitalizadas del tórax y mamografías obtenidas del sitio https://openi.nlm.nih.gov/. Se escogieron parámetros iniciales como se muestra en la \textbf{Table \ref{table:parametrospso}}:
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{||c c | c c||} 
+ \hline
+ Parametro & Valor & Parametro & Valor \\ [0.5ex] 
+ \hline\hline
+ $lower\_limit_{\mathscr{R}_x}$ & $2$ & $upper\_limit_{\mathscr{R}_x}$ & $M/2$ \\ 
+ \hline
+ $lower\_limit_{\mathscr{R}_y}$ & $2$ & $upper\_limit_{\mathscr{R}_y}$ & $N/2$ \\  
+ \hline
+ $lower\_limit_{\mathscr{R}_{\mathscr{C}}}$ & $0$ & $upper\_limit_{\mathscr{R}_{\mathscr{C}}}$ & $1$ \\
+\hline
+$\Omega$ & $70$ & $t$ & $70$ \\ 
+\hline
+$C_1$ Min & $1,5$ & $C_1$ max & $2,5$ \\ 
+\hline
+$C_2$ Min & $1,5$ & $C_2$ max & $2,5$ \\ 
+\hline
+$r_1$ Min & $0,0$ & $r_1$ max & $1,0$ \\ 
+\hline
+$r_2$ Min & $0,0$ & $r_2$ max & $1,0$ \\ [1ex]
+\hline
+\end{tabular}
+\end{center}
+\caption[Parámetros de entrada para $SMPSO$]{Parámetros de entrada para $SMPSO$}
+\label{table:parametrospso}
+\end{table}
+ 
+ 
+ Se realizaron 30 ejecuciones por cada imagen de prueba. Se obtuvieron aproximadamente 300 imágenes soluciones pareto por cada una de ellas. En las figras \textbf {Fig. 2} al \textbf {Fig. 5}  se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/SSIM y Entropía local/SSIM, en las figuras \textbf {Fig. 6}  al \textbf {Fig. 9} se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/LTG y Entropía local/LTG, además de las imágenes originales como referencias. En la tabla se muestran las correlaciones entre los pares de métricas utilizados, se puede notar una relación inversa entre ellas; lo cual indica que estos pares de métricas se complementan para mantener el compromiso entre aumento de contraste y minimización de la distorsión. 
+
+\section{conclusiones}
+\label{sec:conclusion}
+
+
+%figuaras entropia/ssim
+\onecolumn
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ssim/imagen3.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ssim/imagen3_210_2_0-078487.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.54201$ $\mathscr{H}=7.985275$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ssim/imagen3_2_2_0-85964.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.720973$ $\mathscr{H}=7.930176$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado1}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/SSIM. }
+
+\end{minipage}
+
+%figuaras entropia local/ssim
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ssim/imagen3.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ssim/imagen3_17_2_0-4116.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.588178$ $\mathscr{H}=7.98509$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ssim/imagen3_210_2_0-078161.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.54201$ $\mathscr{H}=7.985275$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado3}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/SSIM. }
+
+\end{minipage}
+
+%figuaras entropia/ssim
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6_2_2_0-031886.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.594634$ $\mathscr{H}=6.121506$}
+  	\end{minipage}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6_2_19_1.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.457938$ $\mathscr{H}=7.864396$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado3}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/SSIM. }
+
+\end{minipage}
+
+%figuaras entropia local/ssim
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6_2_19_1.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.457938$ $\mathscr{H}=7.864396$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6_2_11_0-015063.png}
+   		\captionof{subfigure}{Imagen resultante. $SSIM=0.6229193$ $\mathscr{H}=6.174268$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado4}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/SSIM. }
+
+\end{minipage}
+ 
+ %figuras entropia/ltg
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_210_2_0-077765.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.766271$ $\mathscr{H}=7.98540$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_29_2_1.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.785029$ $\mathscr{H}=7.984607$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado5}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/LTG. }
+
+\end{minipage}
+
+%figuras entropia local/ltg
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ltg/imagen3.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ltg/imagen3_210_2_0-080847.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.765835$ $\mathscr{H}=7.985217$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3.5cm]{Figures/entropia_local_ltg/imagen3_27_2_1.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.78507$ $\mathscr{H}=7.984568$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado6}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/LTG. }
+
+\end{minipage}
+
+%figuras entropia/ltg
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6_2_19_1.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.806168$ $\mathscr{H}=7.864343$}
+  	\end{minipage}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6_2_18_0.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.999906$ $\mathscr{H}=5.87327$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado7}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/LTG. }
+
+\end{minipage}
+
+%figuras entropia local/ltg
+\noindent\begin{minipage}[b]{1.0\linewidth}
+  \centering
+   
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6.png}
+   		\captionof{subfigure}{Imagen original}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6_2_15_1.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.811433$ $\mathscr{H}=7.861332$}
+  	\end{minipage}
+  \hspace{1pt}
+   \begin{minipage}[t]{0.3\linewidth}  
+   		\centering
+        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6_2_16_1.png}
+   		\captionof{subfigure}{Imagen resultante. $LTG=0.810728$ $\mathscr{H}=7.864276$}
+  	\end{minipage}
+  \vspace{0.5cm}
+    \label{fig:resultado8}
+  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/LTG. }
+\end{minipage}
+
+
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|l|l|l|}
