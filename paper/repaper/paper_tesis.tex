@@ -280,7 +280,16 @@ delta_j= \frac{upper\_limit_j - lower\_limit_j}{2}
 
 El \textbf{Algoritmo \ref{alg:pso_clahe}} muestra cómo se implementa la propuesta. Las imágenes resultantes se evalúan de acuerdo a las métricas \eqref{eq:entropia} y \eqref{eq:ssim} o \eqref{eq:ltg}, y los mejores resultados que se obtienen en base a éstas métricas conforman un conjunto pareto de soluciones. El conjunto representa una serie de imágenes con distintos niveles de contraste, de manera a resaltar características particulares de la misma.
 
-La interacción entre CLAHE y las partículas de SMPSO se muestran en la \textbf {Fig. 1}. CLAHE recibe como parámetros de entrada los valores almacenados por una partícula $(\mathcal{R}_x,\mathcal{R}_y, \mathscr{C})$ y la imagen original $I$, y a la imagen procesada se le calculan las métricas $\mathscr{H}$ y $SSIM$  o $LTG$ de manera a obtener las funciones objetivo. Las soluciones no dominadas se almacenan en el conjunto pareto. Éste proceso se repite hasta alcanzar un criterio de parada definido.
+La interacción entre CLAHE y las partículas de SMPSO se muestran en la \textbf{Fig. 1}. CLAHE recibe como parámetros de entrada los valores almacenados por una partícula $(\mathcal{R}_x,\mathcal{R}_y, \mathscr{C})$ y la imagen original $I$, y a la imagen procesada se le calculan las métricas $\mathscr{H}$ y $SSIM$  o $LTG$ de manera a obtener las funciones objetivo. Las soluciones no dominadas se almacenan en el conjunto pareto. Éste proceso se repite hasta alcanzar un criterio de parada definido.
+
+ \begin{minipage}[b]{1.0\linewidth}
+   \vspace{0.5cm}
+   \centering
+   \centerline{\includegraphics[height=6.5cm]{Figures/particula_clahe2.jpg}}
+   \vspace{0.5cm}
+   \label{fig:particula_clahe}
+   \captionof{figure}{Interacción entre CLAHE y SMPSO.}
+ \end{minipage}
 
 
 \section{resultados y discusión}
@@ -321,13 +330,91 @@ $r_2$ Min & $0,0$ & $r_2$ max & $1,0$ \\ [1ex]
 \label{table:parametrospso}
 \end{table}
  
- 
-Se realizaron 30 ejecuciones por cada imagen de prueba. Se obtuvieron aproximadamente 300 imágenes soluciones pareto por cada una de ellas. En las figuras \textbf {Fig. 2} al \textbf {Fig. 5}  se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/SSIM y Entropía local/SSIM, en las figuras \textbf {Fig. 6}  al \textbf {Fig. 9} se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/LTG y Entropía local/LTG, además de las imágenes originales como referencias. En la tabla se muestran las correlaciones entre los pares de métricas utilizados, se puede notar una relación inversa entre ellas; lo cual indica que estos pares de métricas se complementan para mantener el compromiso entre aumento de contraste y minimización de la distorsión. 
+Se realizaron 30 ejecuciones por cada imagen de prueba. Se obtuvieron aproximadamente 300 imágenes soluciones pareto por cada una de ellas. En las \textbf{Fig.2} al \textbf {Fig. 5}  se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/SSIM y Entropía local/SSIM, en las figuras \textbf {Fig. 6}  al \textbf {Fig. 9} se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/LTG y Entropía local/LTG, además de las imágenes originales como referencias. En \textbf{Table \ref{tabla:correlacionSSIM}} y \textbf{Table \ref{tabla:correlacionLTG}} se muestran las correlaciones entre los pares de métricas utilizados, se puede notar una relación inversa entre ellas; lo cual indica que estos pares de métricas se complementan para mantener el compromiso entre aumento de contraste y minimización de la distorsión. 
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& Entropía / SSIM & Entropía Local / SSIM\\
+\hline \hline
+Imagen 1 & -0.971902417 & -0.9720935304 \\ \hline
+Imagen 2 & -0.9614426021 & -0.9562885557 \\ \hline
+Imagen 3 & -0.9659256857 & -0.9675449747 \\ \hline
+Imagen 4 & -0.9082717965 & -0.9119592057 \\ \hline
+Imagen 5 & -0.9500009509 & -0.9632835281 \\ \hline
+Imagen 6 & -0.878329477 & -1 \\ \hline
+Imagen 7 & -0.9568185548 & -0.9577921465 \\ \hline
+Imagen 8 & -0.9463678595 & -0.9511655236 \\ \hline
+Imagen 9 & Francia & -0.9419715804 \\ \hline
+Imagen 10 & España & Madrid \\ \hline
+Imagen 11 & -0.964409767 & -0.981682033 \\ \hline
+Imagen 12 & -0.9762372 & -0.981682033 \\ \hline
+Imagen 13 & -0.96055736 & -0.98899815 \\ \hline
+Imagen 14 & -0.952364356 & -0.98963251 \\ \hline
+Imagen 15 & -0.96271548 & -0.984408924 \\ \hline
+Imagen 16 & -0.9644443585 & -0.9777913389 \\ \hline
+Imagen 17 & -0.9632568326 & -0.98528073 \\ \hline
+Imagen 18 & -0.9515086904 & -0.9542339589 \\ \hline
+Imagen 19 & -0.9628701082 & -0.973993699 \\ \hline
+Imagen 20 & -0.9328792106 & -0.9628425557 \\ \hline
+\end{tabular}
+\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, SSIM.}
+\label{tabla:correlacionSSIM}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& Entropía / LTG & Entropía Local / LTG\\
+\hline \hline
+Imagen 1 & -0.9524903286 & -0.9430095655 \\ \hline
+Imagen 2 & -0.9459065618 & -0.950762428 \\ \hline
+Imagen 3 & -0.9695630212 & -0.9668927088 \\ \hline
+Imagen 4 & -0.7652843007 & -0.7775670089 \\ \hline
+Imagen 5 & -0.9005032349 & -0.8895061065 \\ \hline
+Imagen 6 & -0.9580856193 & -0.9635128854 \\ \hline
+Imagen 7 & -0.9415491215 & -0.9547647068 \\ \hline
+Imagen 8 & España & -0.9415551566 \\ \hline
+Imagen 9 & Francia & -0.9149494054 \\ \hline
+Imagen 10 & España & Madrid \\ \hline
+Imagen 11 & -0.948546026 & -0.975410553\\ \hline
+Imagen 12 & -0.95824362 & -0.97025453 \\ \hline
+Imagen 13 & -0.92035706 & -0.98068587 \\ \hline
+Imagen 14 & -0.939319901 & -0.932724602 \\ \hline
+Imagen 15 & -0.953336463 & -0.95304087  \\ \hline
+Imagen 16 & -0.948470373 & -0.9590976409 \\ \hline
+Imagen 17 & -0.943960614 & -0.962423285 \\ \hline
+Imagen 18 & -0.9067494894 & -0.9055475635 \\ \hline
+Imagen 19 & -0.9521232551 & -0.9492860349 \\ \hline
+Imagen 20 & -0.9333793252 & -0.9328576521 \\ \hline
+\end{tabular}
+\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, LTG}
+\label{tabla:correlacionLTG}
+\end{center}
+\end{table}
 
 \section{conclusiones}
 \label{sec:conclusion}
-Se presentaron 4 pares de métricas, Entropía/SSIM, Entropía local/SSIM, Entropía/LTG y Entropía local/LTG, utilizados junto a un algoritmo metaheurístico y el algoritmo CLAHE, con el objetivo de obtener las métricas que maximicen de manera simultánea el contraste y minimicen la distorsión de la imagen. Los resultados experimentales obtenidos demuestran que los pares de métricas Entropía local/SSIM demuestran ser los más contradictorios según la correlación obtenida.
+Se presentaron 4 pares de métricas, Entropía/SSIM, Entropía local/SSIM, Entropía/LTG y Entropía local/LTG, utilizados junto a un algoritmo metaheurístico y el algoritmo CLAHE, con el objetivo de obtener las métricas que maximicen de manera simultánea el contraste y minimicen la distorsión de la imagen. Los resultados experimentales obtenidos en \textbf{Table \ref{tabla:promcorrelacion}} demuestran que los pares de métricas Entropía local/SSIM demuestran ser los más contradictorios según la correlación obtenida.
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Métricas & Correlación \\
+\hline \hline
+Entropía / SSIM & -0 \\ \hline
+Entropía Local / SSIM & -0\\ \hline
+Entropía / LTG & -0 \\ \hline
+Entropía Local / LTG & -0 \\ \hline
+\end{tabular}
+\caption{Promedio de la correlación de Pearson}
+\label{tabla:promcorrelacion}
+\end{center}
+\end{table}
 
 %figuaras entropia/ssim
 \onecolumn
@@ -540,96 +627,6 @@ Se presentaron 4 pares de métricas, Entropía/SSIM, Entropía local/SSIM, Entro
     \label{fig:resultado8}
   \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/LTG. }
 \end{minipage}
-
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-& Entropía / SSIM & Entropía Local / SSIM\\
-\hline \hline
-Imagen 1 & -0.971902417 & -0.9720935304 \\ \hline
-Imagen 2 & -0.9614426021 & -0.9562885557 \\ \hline
-Imagen 3 & -0.9659256857 & -0.9675449747 \\ \hline
-Imagen 4 & -0.9082717965 & -0.9119592057 \\ \hline
-Imagen 5 & -0.9500009509 & -0.9632835281 \\ \hline
-Imagen 6 & -0.878329477 & -1 \\ \hline
-Imagen 7 & -0.9568185548 & -0.9577921465 \\ \hline
-Imagen 8 & -0.9463678595 & -0.9511655236 \\ \hline
-Imagen 9 & Francia & -0.9419715804 \\ \hline
-Imagen 10 & España & Madrid \\ \hline
-Imagen 11 & -0.964409767 & -0.981682033 \\ \hline
-Imagen 12 & -0.9762372 & -0.981682033 \\ \hline
-Imagen 13 & -0.96055736 & -0.98899815 \\ \hline
-Imagen 14 & -0.952364356 & -0.98963251 \\ \hline
-Imagen 15 & -0.96271548 & -0.984408924 \\ \hline
-Imagen 16 & -0.9644443585 & -0.9777913389 \\ \hline
-Imagen 17 & -0.9632568326 & -0.98528073 \\ \hline
-Imagen 18 & -0.9515086904 & -0.9542339589 \\ \hline
-Imagen 19 & -0.9628701082 & -0.973993699 \\ \hline
-Imagen 20 & -0.9328792106 & -0.9628425557 \\ \hline
-\end{tabular}
-\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, SSIM.}
-\label{tabla:correlacionSSIM}
-\end{center}
-\end{table}
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-& Entropía / LTG & Entropía Local / LTG\\
-\hline \hline
-Imagen 1 & -0.9524903286 & -0.9430095655 \\ \hline
-Imagen 2 & -0.9459065618 & -0.950762428 \\ \hline
-Imagen 3 & -0.9695630212 & -0.9668927088 \\ \hline
-Imagen 4 & -0.7652843007 & -0.7775670089 \\ \hline
-Imagen 5 & -0.9005032349 & -0.8895061065 \\ \hline
-Imagen 6 & -0.9580856193 & -0.9635128854 \\ \hline
-Imagen 7 & -0.9415491215 & -0.9547647068 \\ \hline
-Imagen 8 & España & -0.9415551566 \\ \hline
-Imagen 9 & Francia & -0.9149494054 \\ \hline
-Imagen 10 & España & Madrid \\ \hline
-Imagen 11 & -0.948546026 & -0.975410553\\ \hline
-Imagen 12 & -0.95824362 & -0.97025453 \\ \hline
-Imagen 13 & -0.92035706 & -0.98068587 \\ \hline
-Imagen 14 & -0.939319901 & -0.932724602 \\ \hline
-Imagen 15 & -0.953336463 & -0.95304087  \\ \hline
-Imagen 16 & -0.948470373 & -0.9590976409 \\ \hline
-Imagen 17 & -0.943960614 & -0.962423285 \\ \hline
-Imagen 18 & -0.9067494894 & -0.9055475635 \\ \hline
-Imagen 19 & -0.9521232551 & -0.9492860349 \\ \hline
-Imagen 20 & -0.9333793252 & -0.9328576521 \\ \hline
-\end{tabular}
-\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, LTG}
-\label{tabla:correlacionLTG}
-\end{center}
-\end{table}
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-Métricas & Correlación \\
-\hline \hline
-Entropía / SSIM & -0.9524903286 \\ \hline
-Entropía Local / SSIM & -0.9459065618\\ \hline
-Entropía / LTG & -0.9695630212 \\ \hline
-Entropía Local / LTG & -0.7652843007 \\ \hline
-\end{tabular}
-\caption{Promedio de la correlación de Pearson}
-\label{tabla:promCorrelacion}
-\end{center}
-\end{table}
-
-% \begin{minipage}[b]{1.0\linewidth}
-%   \vspace{0.5cm}
-%   \centering
-%   \centerline{\includegraphics[height=6.5cm]{Figures/particula_clahe2.png}}
-%   \vspace{0.5cm}
-%   \label{fig:particula_clahe}
-%   \captionof{figure}{Interacción entre CLAHE y SMPSO.}
-% \end{minipage}
 
  \twocolumn
  \bibliographystyle{IEEEbib}
