@@ -15,6 +15,7 @@
 \usepackage{caption,setspace}
 \usepackage{subfig}
 \usepackage{graphicx}
+\usepackage{etoolbox}
 
 \algrenewcommand\algorithmicif{\textbf{si}}
 \algrenewcommand\algorithmicend{\textbf{fin}}
@@ -28,7 +29,7 @@
 \def\x{{\mathbf x}}
 \def\L{{\cal L}}
 
-\title{OPTIMIZACIÓN MULTIOBJETIVO (FALTA CREAR TITULO) }
+\title{OBTENCIÓN DE MÉTRICAS CONTRADICTORIAS PARA EL ANÁLISIS DE LA CALIDAD DE IMAGEN BASADO EN LA CORRELACIÓN DE PEARSON USANDO PSO-CLAHE}
 
 \name{Monserrat Mora, Adriana Coronel, Diego Pinto-Roa, José Luis Vázquez Noguera}
 \address{Facultad Politécnica - Universidad Nacional de Asunción}
@@ -45,19 +46,19 @@
 % se propone un enfoque de comparación basado en la correlación de pearson para medir la relación inversa entre métricas.
 % Los resultados muestran que una dupla de métricas obtiene el coeficiente más bajo de correlación, lo que indica que son los objetivos más contradictorios.
 
-La mejora de contraste en imágenes en escala de gris es una técnica que busca resaltar la información útil de la imagen. Las técnicas, por lo general están relacionadas con las métricas que se utilizan para medir la cantidad de información y la calidad de la imagen. Escoger las métricas adecuadas de forma a lograr maximizar la información disponible minimizando la cantidad de ruido introducido supone un paso fundamental para lograr resultados en el proceso. En este trabajo se propone un enfoque de comparación basado en la Correlación de Pearson para medir la proporción de cambio inversa entre métricas.Los resultados muestran que una dupla de métricas obtiene el coeficiente más bajo de correlación, lo que indica que los objetivos muestran mayor correlación inversa y por lo tanto son las mejores métricas para utilizar dentro del algoritmo de mejora de contraste. Se realizaron comparaciones de a pares entre Entropía, Entropía Local, Índice de Similitud Estructural y la métrica Local Tuned Global.
+La mejora de contraste en imágenes en escala de gris es una técnica que busca resaltar la información útil de la imagen. Las técnicas, por lo general están relacionadas con las métricas que se utilizan para medir la cantidad de información y la calidad de la imagen. Escoger las métricas adecuadas de forma a lograr maximizar la información disponible minimizando la cantidad de ruido introducido supone un paso fundamental para lograr resultados en el proceso. En este trabajo se propone un enfoque de comparación basado en la Correlación de Pearson para medir la proporción de cambio inversa entre métricas. Los resultados muestran que una dupla de métricas obtiene el coeficiente más bajo de correlación, lo que indica que los objetivos muestran mayor correlación inversa y por lo tanto son las mejores métricas para utilizar dentro del algoritmo de mejora de contraste. Se realizaron comparaciones de a pares entre Entropía, Entropía Local, Índice de Similitud Estructural y la métrica Local Tuned Global.
 
 %Los objetivos propuestos son maximizar la cantidad de información disponible (Entropía / Entropía local) y minimizar la distorsión en las imágenes resultantes (por medio del Índice de Similitud Estructural y el modelo Local Tuned Global) de manera simultánea.
 
 \end{abstract}
 %
 \begin{keywords}
-SMPSO, CLAHE, Entropía, Entropía Local, SSIM, LTG, Mejora del Contraste, Optimización.
+SMPSO, CLAHE, Entropía, Entropía Local, SSIM, LTG, Mejora del , Optimización.
 \end{keywords}
 %
 \section{Introducción}
 \label{sec:intro}
-Las imágenes digitales están expuestas a sufrir una variedad de distorsiones durante su procesamiento, compresión, almacenamiento, transmisión y reproducción, y cualquiera de ellas puede resultar en la degradación de la calidad visual %\cite{digitalimganalysis}.
+Las imágenes digitales están expuestas a sufrir una variedad de distorsiones durante su procesamiento, compresión, almacenamiento, transmisión y reproducción, y cualquiera de ellas puede resultar en la degradación de la calidad visual \cite{digitalimganalysis}.
 
 %citaciones sobre algunas de las técnicas existentes de HE. Inclusive sería bueno especificar técnicas basadas en optimización%
 
@@ -69,7 +70,7 @@ Aunque el campo de procesamiento digital de imágenes está construido sobre una
 
 %citacion de algun paper que hable de HE. 
 %mejora de contraste basada en optimizacion (existen varias tecnicas de mejoras de contraste basada en he, usando tecnicas de optimizacion, como la logica difusa, tesisMore, pso-clahe)
-El histograma de una imagen (HE) \cite{he} es ampliamente utilizado como herramienta tanto cualitativa como cuantitativa, es una buena herramienta para la mejora de contraste. Sin embargo, este y la mayoría de los otros métodos de mejora de contraste puede producir imágenes de aspecto no naturales y las imágenes obtenidas por estos métodos no son las deseables. Existen enfoques de mejora global y local, si se usa sólo información global, no se alcanza un buen realce de contraste, debido a que las técnicas globales podrían causar un efecto de saturación de intensidades, los enfoques locales consideran una ventana local para cada píxel y calcula el valor de la nueva intensidad basado en el histograma local definido, todos los píxeles de una ventana local contribuyen igualmente a la determinación del nuevo valor del píxel central que está siendo considerado, solucionando el problema que podrían presentar los enfoques globales \cite{1419470}. Existen varias técnicas de mejoras de contraste basadas en HE, usando técnicas de optimización con el uso de Algoritmos Genéticos \cite{geneticAlgorithm}, la Logica Difusa \cite{fuzzy}, Optimización por enjambres de partículas con parámetros del CLAHE (PSO-CLAHE) \cite{morebrizuela2014}.
+El histograma de una imagen (HE) \cite{poddar2013non} es ampliamente utilizado como herramienta tanto cualitativa como cuantitativa, es una buena herramienta para la mejora de contraste. Sin embargo, este y la mayoría de los otros métodos de mejora de contraste puede producir imágenes de aspecto no naturales y las imágenes obtenidas por estos métodos no son las deseables. Existen enfoques de mejora global y local, si se usa sólo información global, no se alcanza un buen realce de contraste, debido a que las técnicas globales podrían causar un efecto de saturación de intensidades, los enfoques locales consideran una ventana local para cada píxel y calcula el valor de la nueva intensidad basado en el histograma local definido, todos los píxeles de una ventana local contribuyen igualmente a la determinación del nuevo valor del píxel central que está siendo considerado, solucionando el problema que podrían presentar los enfoques globales \cite{yu2004fast}. Existen varias técnicas de mejoras de contraste basadas en HE, usando técnicas de optimización con el uso de Algoritmos Genéticos \cite{hashemi2010image}, la Logica Difusa \cite{jenifer2016contrast}, Optimización por enjambres de partículas con parámetros del CLAHE (PSO-CLAHE) \cite{morebrizuela2014}.
  
 Los enfoques de mejora local demuestran ser sumamente útiles al momento de resaltar detalles en imágenes con gran cantidad de detalles finos. Existen diversas propuestas que se centran en mejorar el contraste en radiografías \cite{1625082,4712472,5360176}. Debido a ello en esta propuesta se analizan pares de métricas de calidad, realizando una comparación de la correlación entre las mismas, para identificar las métricas más adecuadas para la optimización multiobjetivo de la mejora de contraste de una imagen. 
 Se utilizará una meta heurística de optimización de objetivos, de manera a sintonizar los parámetros de entrada del algoritmo de mejora del contraste descripto en la sección \ref{sec:clahe}, de manera a obtener un grupo de imágenes contrastadas, las cuales serán evaluadas en cuanto a la ganancia de información proveída y distorsión introducida por la ecualización (sección \ref{sec:metricas}).
@@ -80,7 +81,7 @@ El resto del trabajo se organiza de la siguiente manera: En la sección \ref{sec
 
 \section{Contrast Limited Adaptive Histogram Equalization (CLAHE)}
 \label{sec:clahe}
-Este enfoque de mejora de contraste presentado en \cite{Zuiderveld:1994:CLA:180895.180940} es una extensión del algoritmo original Adaptive Histogram Equalization (AHE) \cite{pizer1987adaptive}; en ambos métodos se implementa un enfoque de Ecualización del Histograma local basada en {\it Regiones Contextuales}, que representan porciones de la imagen, cuyas dimensiones están delimitadas por $(\mathcal{R}_x, \mathcal{R}_y)$, para realizar la ecualización por sectores de la imagen. Las inconsistencias entre fronteras de las secciones de la imagen se corrigen aplicando un esquema de interpolación bilineal. 
+Este enfoque de mejora de contraste presentado en \cite{zuiderveld1994contrast} es una extensión del algoritmo original Adaptive Histogram Equalization (AHE) \cite{pizer1987adaptive}; en ambos métodos se implementa un enfoque de Ecualización del Histograma local basada en \textbf{\emph{\textbf{}}}{\it Regiones Contextuales}, que representan porciones de la imagen, cuyas dimensiones están delimitadas por $(\mathcal{R}_x, \mathcal{R}_y)$, para realizar la ecualización por sectores de la imagen. Las inconsistencias entre fronteras de las secciones de la imagen se corrigen aplicando un esquema de interpolación bilineal. 
 
 El algoritmo AHE original presenta problemas de amplificación del ruido, por tanto en CLAHE se implementa una limitación de la cantidad de píxeles que pueden alcanzar cierto nivel de gris dentro del histograma local; aquí se define el coeficiente {\it Clip Limit} $\mathcal{C}$, como un factor que está fuertemente relacionado con los contenidos del histograma. El mismo permite realizar cortes en picos del histograma local, que se traducen en ruido dentro de la imagen.
 
@@ -89,7 +90,7 @@ La capacidad de controlar el grado de mejora del contraste por medio de la manip
 
 %acá hay algo importante que creo que falta, hay que mostrar que clahe (y sus posibles variantes) son muy efectivas para realizar la mejora del contraste en imágenes médicas; además podemos agregar alguna grafiquita, porque de otra forma queda muy escueto%
 
-\section{métricas de evaluación}
+\section{Métricas de evaluación}
 \label{sec:metricas}
 Se realiza una selección de alternativas a partir de la necesidad de encontrar métricas que proporcionen el mejor balance entre mejora del contraste y distorsión. En esta sección se muestran las cuatro métricas seleccionadas para el análisis y comparaciones de correlación entre las mismas. Éstas son la Entropía y Entropía local como medidas de mejora del contraste, el Índice de Similitud Estructural y el modelo Local Tuned Global como medidas de distorsión de la imagen.
 
@@ -103,7 +104,6 @@ La {\it Entropía de la Información} es una medida de la aleatoriedad presente 
 \end{equation}
 
 Donde $\mathcal{P}_i$ es la probabilidad de ocurrencias del nivel de gris $i$ en el histograma y $L$ es el máximo nivel de gris que se puede utilizar para representar la imagen. Esta métrica es interesante debido a que está fuertemente asociada al brillo medio de la imagen \cite{108593}; este coeficiente nos ayuda a ver cuánto aumenta el contraste como consecuencia de la transformación de la imagen.
-
 
 \subsection{Entropía Local}
 \label{ssec:entropialocal}
@@ -133,14 +133,8 @@ Donde $\mu_{I_x}$ es el promedio de intensidades de $I_x$; $\mu_{T_y}$ es el pro
 \subsection{ Local Tuned Global Model (LTG)}
 \label{ssec:ltg}
 El modelo {Local Tuned Global (LTG)} está inspirado en las métricas IQA (Image Quality Assessment)\cite{ltg2014}, fue introducido bajo la hipótesis de que la percepción visual humana en  la calidad de la imagen depende de la distorsión local resaltante y la degradación global de la calidad. 
-El LTG es un enfoque basado en el gradiente de la imagen, ya que ésta es muy sensible a las distorsiones de la misma; así también extrae información sobre la luminancia (brillo percibido por el ojo humano) y la crominancia (información del color) de la imagen de entrada y la imagen distorsionada, luego mide la distorsión local resaltante y la degradación global de la calidad en la información obtenida sobre la luminancia y compara las diferencias en la información obtenida sobre la crominancia, derivando así el valor global de la calidad de la imagen.
 
-\begin{equation}\label{eq:ltg}
-\resizebox{.6\hsize}{!}
-{
-$LTG(x,y) =\frac{\Phi(G_{s}^{\theta_1})}{\Phi(G_{m}^{\theta_2})} \Phi(I_{m}^{\theta_3}.Q_{m}^{\theta_3})$
-}
-\end{equation}
+El LTG es un enfoque basado en el gradiente de la imagen (GM) \cite{gradiente}, ya que ésta es muy sensible a las distorsiones de la misma; así también extrae información sobre la luminancia (brillo percibido por el ojo humano) y la crominancia (información del color) de la imagen de entrada y la imagen distorsionada, luego mide la distorsión local resaltante y la degradación global de la calidad en la información obtenida sobre la luminancia y compara las diferencias en la información obtenida sobre la crominancia, derivando así el valor global de la calidad de la imagen.
 
 El GM está dada por:
 \begin{equation}\label{eq:gm}
@@ -149,41 +143,54 @@ El GM está dada por:
 $G = \sqrt[]{G_{h}^{2} + G_{v}^{2}}$
 }
 \end{equation}
-
 Donde:
 \begin{itemize}
- \item $G_{m}$ =  es el gradiente medio de la imagen original y distorsionada, se adopta el operador Scharr  \cite{gradiente}.
+ \item $G_{h}$ y  $G_{v}$ son las derivadas parciales de la imagen a lo largo de las direcciones horizontal y vertical utilizando el operador Scharr \cite{jahne1999handbook}.
  \item $ G_{s}$ = indica los pixeles con valores S\% más altos en $G_{m}$.
- \item  $I_{m}$ y $Q_{m}$ = contienen la información de crominancia de las imagenes. 
-%Gh? GM? y Gv?
 \end{itemize} 
-
-%Ésto vamos a poner en una sección aparte, hay que hacer hincapié en que el problema que se resuelve es la selección de métricas, y ésta es la herramienta que se usa para medir qué tan contradictorias son las métricas%
-\subsection{Correlación de Pearson}
-\label{ssec:correlacion}%citacion
-La Correlación de Pearson \cite{correlacion} es un índice que puede utilizarse para medir el grado de relación o covariación de dos variables distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas.
-
-El valor del  índice de correlación varía en el intervalo [-1,1]. Esto es, si tenemos dos variables $X$ e $Y$, y definimos el coeficiente de correlación de Pearson entre estas dos variables como $r_{xy}$ entonces: 
-\begin{equation}\label{eq:gm}
-\resizebox{.3\hsize}{!}
+ 
+\begin{equation}\label{eq:ltg}
+\resizebox{.6\hsize}{!}
 {
-$-1<r_{xy}<1$ 
+$LTG(x,y) =\frac{\Phi(G_{s}^{\theta_1})}{\Phi(G_{m}^{\theta_2})} \Phi(I_{m}^{\theta_3}.Q_{m}^{\theta_3})$
 }
 \end{equation}
 
 Donde:
 \begin{itemize}
-\item Si $r = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.
-\item Si $0<r<1$, existe una correlación positiva.
-\item Si $r = 0$, no existe relación lineal.
-\item Si $-1<r<0$, existe una correlación negativa.
-\item Si $r = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
-\end{itemize}
+ \item $G_{m}$ =  es el gradiente medio de la imagen original y distorsionada.
+ \item $ G_{s}$ = indica los pixeles con valores S\% más altos en $G_{m}$.
+ \item  $I_{m}$ y $Q_{m}$ = contienen la información de crominancia de las imagenes. 
+\end{itemize} 
+
+%Ésto vamos a poner en una sección aparte, hay que hacer hincapié en que el problema que se resuelve es la selección de métricas, y ésta es la herramienta que se usa para medir qué tan contradictorias son las métricas%
+%\subsection{Correlación de Pearson}
+%\label{ssec:correlacion}
+%La Correlación de Pearson \cite{correlacion} es un índice que puede utilizarse para medir el grado de relación o covariación de dos variables distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas.
+%
+%El valor del  índice de correlación varía en el intervalo [-1,1]. Esto es, si tenemos dos variables $X$ e $Y$, y definimos el coeficiente de correlación de Pearson entre estas dos variables como $r_{xy}$ entonces: 
+%\begin{equation}\label{eq:gm}
+%\resizebox{.3\hsize}{!}
+%{
+%$-1<r_{xy}<1$ 
+%}
+%\end{equation}
+%
+%Donde:
+%\begin{itemize}
+%\item Si $r = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.	
+%\item Si $0<r<1$, existe una correlación positiva.
+%\item Si $r = 0$, no existe relación lineal.
+%\item Si $-1<r<0$, existe una correlación negativa.
+%\item Si $r = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
+%\end{itemize}
 
 \section{Formulación del Problema Planteado}
 \label{sec:formulacion}
 %el problema planteado vamos a tener que revisarlo, porque en este caso no es directamente la aplicación del la metaheurística para la mejora del constraste, sino que es la evaluación de las métricas que dan menor correlación%
-Dadas la imagen de entrada $I$, y un vector $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el $Clip Limit$, se desea calcular el conjunto de soluciones $\mathscr{X}$ que maximice de manera simultánea los objetivos $f_1$ y $f_2$, como se muestra abajo:
+El problema radica en la selección correcta de las métricas, de manera a obtener un resultado satisfactorio. La selección incorrecta de este par de métricas en conjunto da una solución insatisfactoria. Se desea encontrar un par de métricas con una correlación negativa, lo que nos indica que ambas métricas son altamente contradictorias.
+
+Dadas la imagen de entrada $I$, la imagen $T$ mejorada por $CLAHE(\overrightarrow{x},I)$ con los parámetros dados por un vector $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ aplicados a $I$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el $Clip Limit$, se calcula el conjunto de soluciones $\mathscr{X}$ que maximice de manera simultánea los objetivos $f_1$ y $f_2$, como se muestra abajo:
 
 \begin{equation}\label{eq:fitness}
     f(I, \overrightarrow{x}) = \{ f_1(I, \overrightarrow{x}), f_2(I, \overrightarrow{x}) \} \qquad f_1,f_2 \in [0,1]
@@ -192,11 +199,17 @@ Dadas la imagen de entrada $I$, y un vector $\overrightarrow{x}=(\mathcal{R}_x, 
 donde:
 \begin{itemize}
 %\item $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el Clip Limit.
-\item $f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía local normalizada de la imagen $T$.
-\item $f_{2}(I, \overrightarrow{x})=SSIM(I,T)$ es el Índice de Similitud Estructural o  el modelo Local Tuned Global  entre $I$ y $T$.
+\item $f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía normalizada de la imagen $T$.
 
-Siendo $T$ la imagen mejorada por $CLAHE(\overrightarrow{x},I)$ con los parámetros dados por $\overrightarrow{x}$ aplicados a $I$.
+ó
 
+$f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía local normalizada de la imagen $T$.
+
+\item $f_{2}(I, \overrightarrow{x})=SSIM(I,T)$ es el Índice de Similitud Estructural 
+
+ó
+
+ $f_{2}(I, \overrightarrow{x})=LTG(I,T)$ el modelo Local Tuned Global  entre $I$ y $T$.
 \end{itemize}
 
 sujeto a:
@@ -209,12 +222,28 @@ sujeto a:
 
 Ésto significa que los valores de $\mathcal{R}$ solamente pueden tomar valores enteros positivos entre $(2,2)$ y $(M,N)$ y que $\mathscr{C}$ puede tomar un valor mayor a cero y menor o igual a 1.
 
-
-
 \section{propuesta}
 \label{sec:propuesta}
 %aca la propuesta no es aplicar directamente el algoritmo, hay que acortar un poquito la parte del smpso, e incluir como marco teorico. Despues vamos a desarrollar la propuesta en si.
-Se utiliza el algoritmo $SMPSO$ \cite{4938830}, donde las soluciones potenciales $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ se denominan {\it partículas} y el conjunto de partículas $\Omega$ se denomina {\it enjambre}. Cada partícula $\overrightarrow{x_i}$ se actualiza en cada generación $t$ de acuerdo a la siguiente ecuación:
+Se utilizaron las pruebas de correlación de Pearson \cite{correlacion}; cuyo índice puede utilizarse para medir el grado de relación o covariación de dos métricas distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas; para determinar la fuerza de las relaciones entre las métricas de la imagen, donde las soluciones potenciales $r_{xy}$ se denominan coeficiente de correlación de las variables $x$ e $y$. Donde $x$ es la Entropía ó Entropía Local e $y$ es el SSIM ó LTG. El valor del  índice de correlación varía en el intervalo [-1,1], entonces:
+
+\begin{equation}\label{eq:gm}
+\resizebox{.3\hsize}{!}
+{
+$-1<r_{xy}<1$ 
+}
+\end{equation}
+
+Donde:
+\begin{itemize}
+\item Si $r = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.	
+\item Si $0<r<1$, existe una correlación positiva.
+\item Si $r = 0$, no existe relación lineal.
+\item Si $-1<r<0$, existe una correlación negativa.
+\item Si $r = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
+\end{itemize}
+
+Se utiliza el algoritmo $SMPSO$ \cite{nebro2009smpso}, donde las soluciones potenciales $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ se denominan {\it partículas} y el conjunto de partículas $\Omega$ se denomina {\it enjambre}. Cada partícula $\overrightarrow{x_i}$ se actualiza en cada generación $t$ de acuerdo a la siguiente ecuación:
 
 \begin{equation}\label{eq:psobasico}
 \overrightarrow{x_i}^t = \overrightarrow{x_i}^{(t-1)} + \overrightarrow{v_i}^t
@@ -252,6 +281,86 @@ delta_j= \frac{upper\_limit_j - lower\_limit_j}{2}
 El \textbf{Algoritmo \ref{alg:pso_clahe}} muestra cómo se implementa la propuesta. Las imágenes resultantes se evalúan de acuerdo a las métricas \eqref{eq:entropia} y \eqref{eq:ssim} o \eqref{eq:ltg}, y los mejores resultados que se obtienen en base a éstas métricas conforman un conjunto pareto de soluciones. El conjunto representa una serie de imágenes con distintos niveles de contraste, de manera a resaltar características particulares de la misma.
 
 La interacción entre CLAHE y las partículas de SMPSO se muestran en la \textbf {Fig. 1}. CLAHE recibe como parámetros de entrada los valores almacenados por una partícula $(\mathcal{R}_x,\mathcal{R}_y, \mathscr{C})$ y la imagen original $I$, y a la imagen procesada se le calculan las métricas $\mathscr{H}$ y $SSIM$  o $LTG$ de manera a obtener las funciones objetivo. Las soluciones no dominadas se almacenan en el conjunto pareto. Éste proceso se repite hasta alcanzar un criterio de parada definido.
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& Entropía / SSIM & Entropía Local / SSIM\\
+\hline \hline
+Imagen 1 & -0.971902417 & -0.9720935304 \\ \hline
+Imagen 2 & -0.9614426021 & -0.9562885557 \\ \hline
+Imagen 3 & -0.9659256857 & -0.9675449747 \\ \hline
+Imagen 4 & -0.9082717965 & -0.9119592057 \\ \hline
+Imagen 5 & -0.9500009509 & -0.9632835281 \\ \hline
+Imagen 6 & -0.878329477 & -1 \\ \hline
+Imagen 7 & -0.9568185548 & -0.9577921465 \\ \hline
+Imagen 8 & -0.9463678595 & -0.9511655236 \\ \hline
+Imagen 9 & Francia & -0.9419715804 \\ \hline
+Imagen 10 & España & Madrid \\ \hline
+Imagen 11 & -0.964409767 & -0.981682033 \\ \hline
+Imagen 12 & -0.9762372 & -0.981682033 \\ \hline
+Imagen 13 & -0.96055736 & -0.98899815 \\ \hline
+Imagen 14 & -0.952364356 & -0.98963251 \\ \hline
+Imagen 15 & -0.96271548 & -0.984408924 \\ \hline
+Imagen 16 & -0.9644443585 & -0.9777913389 \\ \hline
+Imagen 17 & -0.9632568326 & -0.98528073 \\ \hline
+Imagen 18 & -0.9515086904 & -0.9542339589 \\ \hline
+Imagen 19 & -0.9628701082 & -0.973993699 \\ \hline
+Imagen 20 & -0.9328792106 & -0.9628425557 \\ \hline
+\end{tabular}
+\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, SSIM.}
+\label{tabla:correlacionSSIM}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& Entropía / LTG & Entropía Local / LTG\\
+\hline \hline
+Imagen 1 & -0.9524903286 & -0.9430095655 \\ \hline
+Imagen 2 & -0.9459065618 & -0.950762428 \\ \hline
+Imagen 3 & -0.9695630212 & -0.9668927088 \\ \hline
+Imagen 4 & -0.7652843007 & -0.7775670089 \\ \hline
+Imagen 5 & -0.9005032349 & -0.8895061065 \\ \hline
+Imagen 6 & -0.9580856193 & -0.9635128854 \\ \hline
+Imagen 7 & -0.9415491215 & -0.9547647068 \\ \hline
+Imagen 8 & España & -0.9415551566 \\ \hline
+Imagen 9 & Francia & -0.9149494054 \\ \hline
+Imagen 10 & España & Madrid \\ \hline
+Imagen 11 & -0.948546026 & -0.975410553\\ \hline
+Imagen 12 & -0.95824362 & -0.97025453 \\ \hline
+Imagen 13 & -0.92035706 & -0.98068587 \\ \hline
+Imagen 14 & -0.939319901 & -0.932724602 \\ \hline
+Imagen 15 & -0.953336463 & -0.95304087  \\ \hline
+Imagen 16 & -0.948470373 & -0.9590976409 \\ \hline
+Imagen 17 & -0.943960614 & -0.962423285 \\ \hline
+Imagen 18 & -0.9067494894 & -0.9055475635 \\ \hline
+Imagen 19 & -0.9521232551 & -0.9492860349 \\ \hline
+Imagen 20 & -0.9333793252 & -0.9328576521 \\ \hline
+\end{tabular}
+\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, LTG}
+\label{tabla:correlacionLTG}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Métricas & Correlación \\
+\hline \hline
+Entropía / SSIM & -0.9524903286 \\ \hline
+Entropía Local / SSIM & -0.9459065618\\ \hline
+Entropía / LTG & -0.9695630212 \\ \hline
+Entropía Local / LTG & -0.7652843007 \\ \hline
+\end{tabular}
+\caption{Promedio de la correlación de Pearson}
+\label{tabla:promCorrelacion}
+\end{center}
+\end{table}
 
 % \begin{minipage}[b]{1.0\linewidth}
 %   \vspace{0.5cm}
