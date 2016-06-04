@@ -1,0 +1,28 @@
+normal_ssim
+imagen3_210_2_0.078487, entropia = 7.985275 SSIM = 0.54201
+imagen3_2_2_0.85964 entropia = 7.930176 SSIM= 0.720973
+
+imagen6_2_2_0.031886 entropia = 6.121506 SSIM=0.594634
+imagen6_2_19_1 = entropia 7.864396 SSIM= 0.457938
+
+local_ssim
+imagen3_17_2_0.4116 = entropia = 7.98509 SSIM = 0.588178
+imagen3_210_2_0.078161 = entropia = 7.985275 SSIM=0.54201
+
+imagen6_2_19_1 =  entropia = 7.864396 SSIM=0.457938
+imagen6_2_11_0.015063 = entropia = 6.174268 SSIM=0.622919
+
+
+normal_ltg
+imagen3_210_2_0.077765 = entropia= 7.985401 SSIM = 0.766271
+imagen3_29_2_1 = entropia = 7.984607  SSIM = 0.785029
+
+imagen6_2_19_1 = entropia = 7.864343  SSIM = 0.806168
+imagen6_2_18_0 =  entropia = 5.87327  SSIM = 0.999906
+
+local_ltg
+imagen3_210_2_0.080847 = entropia = 7.985217 SSIM = 0.765835
+imagen3_27_2_1 = entropia = 7.984568 SSIM = 0.78507
+
+imagen6_2_15_1 = entropia = 7.861332 SSIM = 0.811433
+imagen6_2_16_1 = entropia = 7.864276  SSIM = 0.810728
