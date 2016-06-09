@@ -1,9 +1,3 @@
-#ignorar imagenes
-*.jpg
-*.bmp
-*.tiff
-*.tif
-*.jpeg
-*.png
+
 #ignorar logs
 *.log*
