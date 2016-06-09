@@ -47,10 +47,10 @@ public class Tesis extends Problem {
         lowerLimit_ = new double[numeroDeVariables];
         lowerLimit_[0] = 2;
         //upperLimit_[0] = filas;
-        upperLimit_ [0] = cantidadFilas;
+        upperLimit_ [0] = Math.round(cantidadFilas/2);
         lowerLimit_[1] = 2;
         //upperLimit_[1] = columnas;
-        upperLimit_[1] = cantidadColumnas;
+        upperLimit_[1] = Math.round(cantidadColumnas/2);
         lowerLimit_[2] = 0;
         //upperLimit_[2] = 256;
         upperLimit_[2] = 1;
@@ -120,22 +120,29 @@ public class Tesis extends Problem {
             String resultadoSocket = SMPSOTesis_main.canalSocket.enviarMensaje(comando.toString());
             double[] resultados = doDecodeRespuesta(resultadoSocket);
 
-            double entropiaOrig = resultados[0];//((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
+//             double psnr = resultados[0];//((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
+//            double ssim = resultados[1];//((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
+         
+          double entropiaOrig = resultados[0];//((double[]) SMPSOTesis_main.proxy.getVariable("e"))[0];
             double entropiaClahe = resultados[1];//((double[]) SMPSOTesis_main.proxy.getVariable("c"))[0];
-            double ltg = resultados[2];//((double[]) SMPSOTesis_main.proxy.getVariable("l"))[0];
+            double ssim = resultados[2];//((double[]) SMPSOTesis_main.proxy.getVariable("l"))[0];
             log.info("entropia original: " + entropiaOrig);
             log.info("entropia clahe: " + entropiaClahe);
-            log.info("ltg: " + ltg);
+            log.info("ltg: " + ssim);
+//            log.info("ltg: " + ltg);
+            
+//             log.info("psnr: " + psnr);
+//            log.info("ssim: " + ssim);
 
-            double resul = entropiaClahe / entropiaOrig;
-            if (resul <= 1) {
-                entropiaClahe = 0;
-            } else {
-                entropiaClahe = resul;
-            }
+//            double resul = entropiaClahe / entropiaOrig;
+//            if (resul <= 1) {
+//                entropiaClahe = 0;
+//            } else {
+//                entropiaClahe = entropiaClahe;
+//            }
             solution.setNombreImagenResultado(nombreImagen);
             solution.setObjective(0, entropiaClahe);
-            solution.setObjective(1, ltg);
+            solution.setObjective(1, ssim);
 
             //        int[][] imagenClahe = getCLAHE((int)fx[0],(int)fx[1],fx[2]);
             //        double entropia = getEntropia(getHistograma(imagenClahe,filas,columnas),filas*columnas);

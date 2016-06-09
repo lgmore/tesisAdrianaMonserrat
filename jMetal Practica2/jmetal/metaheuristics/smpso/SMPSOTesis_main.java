@@ -35,7 +35,7 @@ public class SMPSOTesis_main {
     public static final String DB_DRIVER = "org.postgresql.Driver";
     public static String DB_CONNECTION;
     public static final String DB_USER = "postgres";
-    public static final String DB_PASSWORD = "admin";
+    public static final String DB_PASSWORD = "postgres";
     public static String nombreImagen;
     public static int puertoSocket;
     public static CanalSocket canalSocket;

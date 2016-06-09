@@ -136,8 +136,8 @@ public class SolutionSet implements Serializable {
      FileOutputStream fos = new FileOutputStream(path);
      OutputStreamWriter osw = new OutputStreamWriter(fos);
      BufferedWriter bw = new BufferedWriter(osw);
-     //bw.write("Entropía        ----        SSIM");
-     bw.write("Entropía*SSIM");
+     //bw.write("EntropÃ­a        ----        SSIM");
+     bw.write("EntropÃ­a*SSIM");
      bw.newLine();
      for (Solution aSolutionsList_ : solutionsList_) {
      bw.write(aSolutionsList_.toString());
@@ -174,9 +174,10 @@ public class SolutionSet implements Serializable {
                         aSolutionsList_.getDecisionVariables()[1].toString(), //Y
                         aSolutionsList_.getDecisionVariables()[2].toString(), //CLIP
                         aSolutionsList_.getObjective(0), //entropia
-                        aSolutionsList_.getObjective(1) //ssim
+                        aSolutionsList_.getObjective(1), //ssim
+                        aSolutionsList_.getCorridas()
                 );
-
+                System.out.println("CORRIDAS: "+aSolutionsList_.getCorridas());
                 // execute insert SQL stetement
                 log.info("sql: "+insertTableSQL);
                 dbConnection = getDBConnection();
@@ -389,10 +390,10 @@ public class SolutionSet implements Serializable {
         return resultado;
     }
 
-    private String getSentenciaSQL(String x, String y, String clip, double entropia, double ssim) {
-        String resultado = "INSERT INTO resultados"
+    private String getSentenciaSQL(String x, String y, String clip, double entropia, double ssim, int corridas) {
+        String resultado = "INSERT INTO resultadosentropiassim"
                 + "(x,y,clip,entropia,nombre,dominado,nrocorrida,ssim) " + "VALUES"
-                + "(" + x + "," + y + "," + clip + "," + entropia + ",'" + nombreImagen + "','N',0," + ssim + ")";
+                + "(" + x + "," + y + "," + clip + "," + entropia + ",'" + "imagen28" + "','N',"+corridas + ","+ ssim + ")";
         return resultado;
     }
 
