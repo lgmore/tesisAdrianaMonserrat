@@ -11,8 +11,8 @@ import jmetal.util.wrapper.XReal;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
 import org.apache.log4j.PropertyConfigurator;
 
 public class SMPSOTesis extends Algorithm {
@@ -177,7 +177,7 @@ public class SMPSOTesis extends Algorithm {
     @Override
     public SolutionSet execute() throws JMException, ClassNotFoundException {
         iniciarParametros();
-        System.out.println("Empezó: "+Calendar.getInstance().getTime().toString());
+        log.info("Empezó: "+Calendar.getInstance().getTime().toString());
         //->Step 1 (and 3) poblacion inicial, creamos cada una de las particulas con un valor aleatorio para cada una
         for (int i = 0; i < tamañoEnjambre; i++) {
             Solution particula = new Solution(problem_);//crea la particula con valores random en sus variables, del tipo de solucion de la particula, para este caso es "Real"
@@ -211,7 +211,7 @@ public class SMPSOTesis extends Algorithm {
             try {
                 calcularVelocidad(iteracion, maximoIteraciones);
             } catch (IOException ex) {
-                Logger.getLogger(SMPSOTesis.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(ex.getMessage());
             }
             calcularNuevasPosiciones();
             //mutar(iteracion, maximoIteraciones);
@@ -219,8 +219,8 @@ public class SMPSOTesis extends Algorithm {
             for (int i = 0; i < particulas.size(); i++) {//por cada particula
                 Solution particula = particulas.get(i);
                 problem_.evaluate(particula);//evaluar funciones del problema
-                System.out.println("Particula "+i+". Entropia: "+particula.getObjective(0)+". SSIM: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
-                System.out.println("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
+                log.info("Particula "+i+". Entropia: "+particula.getObjective(0)+". LTG: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
+                log.info("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
                 //System.out.println("Particula "+i+". Entropia*SSIM: "+particula.getObjective(0));
             }
             //Actualizar el archivo de lideres no dominados, solo entran los q no son dominados, los dominados se van quitando de la lista
