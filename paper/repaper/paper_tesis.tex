@@ -18,6 +18,7 @@
 \usepackage{subfig}
 \usepackage{graphicx}
 \usepackage{etoolbox}
+\usepackage{float}
 
 \algrenewcommand\algorithmicif{\textbf{si}}
 \algrenewcommand\algorithmicend{\textbf{fin}}
@@ -117,7 +118,7 @@ Si se define una pequeña vecindad $\Omega_k$ de tamaño $M_k$ $X$ $N_k$ de la i
  \mathscr E{(\Omega_k)}=\sum_{j=0}^{G-1}\mathcal P_j log_2(\frac{1}{P}_j)
 \end{equation}
 
-donde $\mathcal P_j=\frac{n_j}{M_k X N_k}$ denota la probabilidad del nivel de gris de $j$ en la vecindad  $\Omega_k$, $n_j$ es la cantidad de píxeles con nivel de gris $j$ en  $\Omega_k$ y E ($\Omega_k$), la entropía local de  $\Omega_k$.
+donde $\mathcal P_j=\frac{n_j}{M_k X N_k}$ denota la probabilidad del nivel de gris de $j$ en la vecindad  $\Omega_k$, $n_j$ es la cantidad de píxeles con nivel de gris $j$ en  $\Omega_k$ y  $\mathscr E$ ($\Omega_k$), la entropía local de  $\Omega_k$.
 
 \subsection{Índice de similitud estructural (SSIM)}
 \label{ssec:ssim}
@@ -166,54 +167,47 @@ Donde:
  \item  $I_{m}$ y $Q_{m}$ = contienen la información de crominancia de las imagenes. 
 \end{itemize} 
 
-%Ésto vamos a poner en una sección aparte, hay que hacer hincapié en que el problema que se resuelve es la selección de métricas, y ésta es la herramienta que se usa para medir qué tan contradictorias son las métricas%
-%\subsection{Correlación de Pearson}
-%\label{ssec:correlacion}
-%La Correlación de Pearson \cite{correlacion} es un índice que puede utilizarse para medir el grado de relación o covariación de dos variables distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas.
-%
-%El valor del  índice de correlación varía en el intervalo [-1,1]. Esto es, si tenemos dos variables $X$ e $Y$, y definimos el coeficiente de correlación de Pearson entre estas dos variables como $r_{xy}$ entonces: 
-%\begin{equation}\label{eq:gm}
-%\resizebox{.3\hsize}{!}
-%{
-%$-1<r_{xy}<1$ 
-%}
-%\end{equation}
-%
-%Donde:
-%\begin{itemize}
-%\item Si $r = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.	
-%\item Si $0<r<1$, existe una correlación positiva.
-%\item Si $r = 0$, no existe relación lineal.
-%\item Si $-1<r<0$, existe una correlación negativa.
-%\item Si $r = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
-%\end{itemize}
-
 \section{Formulación del Problema Planteado}
 \label{sec:formulacion}
 %el problema planteado vamos a tener que revisarlo, porque en este caso no es directamente la aplicación del la metaheurística para la mejora del constraste, sino que es la evaluación de las métricas que dan menor correlación%
 El problema radica en la selección correcta de las métricas, de manera a obtener un resultado satisfactorio. La selección incorrecta de este par de métricas en conjunto da una solución insatisfactoria. Se desea encontrar un par de métricas con una correlación negativa, lo que nos indica que ambas métricas son altamente contradictorias.
 
-Dadas la imagen de entrada $I$, la imagen $T$ mejorada por $CLAHE(\overrightarrow{x},I)$ con los parámetros dados por un vector $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ aplicados a $I$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el $Clip Limit$, se calcula el conjunto de soluciones $\mathscr{X}$ que maximice de manera simultánea los objetivos $f_1$ y $f_2$, como se muestra abajo:
+Dadas la imagen de entrada $I$, la imagen $T$ mejorada por $CLAHE(\overrightarrow{x},I)$ con los parámetros dados por un vector $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ aplicados a $I$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el $Clip Limit$, se calcula el conjunto de soluciones $\mathscr{X}$ para determinar la combinación de los objetivos $f_1$ y $f_2$, tal que:
 
 \begin{equation}\label{eq:fitness}
-    f(I, \overrightarrow{x}) = \{ f_1(I, \overrightarrow{x}), f_2(I, \overrightarrow{x}) \} \qquad f_1,f_2 \in [0,1]
+ min (\rho_{{f_1}{f_2}})  
 \end{equation}
 
 donde:
 \begin{itemize}
-%\item $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el Clip Limit.
-\item $f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía normalizada de la imagen $T$.
+\item $\rho $ es la correlación existente entre ${f_1}$ y ${f_2}$
 
-ó
-
-$f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía local normalizada de la imagen $T$.
-
-\item $f_{2}(I, \overrightarrow{x})=SSIM(I,T)$ es el Índice de Similitud Estructural 
-
-ó
-
- $f_{2}(I, \overrightarrow{x})=LTG(I,T)$ el modelo Local Tuned Global  entre $I$ y $T$.
+\item $ f_1,f_2 \in [\mathcal{H}, \mathcal{E}, {SSIM}, {LTG}]$
 \end{itemize}
+
+%\begin{equation}\label{eq:fitness}
+%    f(I, \overrightarrow{x}) = \{ f_1(I, \overrightarrow{x}), f_2(I, \overrightarrow{x}) \} \qquad f_1,f_2 \in [0,1]
+%\end{equation}
+
+%donde:
+%\begin{itemize}
+%\item $f_{1}$ es la Entropía normalizada ó la Entropía Local de la imagen $T$.
+%\item $f_{2}$ es SSIM ó LTG de $T$.
+%\end{itemize}
+%\begin{itemize}
+%%\item $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$, donde $\mathcal{R}_x$ y $\mathcal{R}_y$ conforman la región contextual y $\mathscr{C}$ es el Clip Limit.
+%\item $f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía normalizada de la imagen $T$.
+%
+%ó
+%
+%$f_{1}(I, \overrightarrow{x})=\frac{\mathscr{H}(T)}{log_{2}L}$ es la Entropía local normalizada de la imagen $T$.
+%
+%\item $f_{2}(I, \overrightarrow{x})=SSIM(I,T)$ es el Índice de Similitud Estructural 
+%
+%ó
+%
+% $f_{2}(I, \overrightarrow{x})=LTG(I,T)$ el modelo Local Tuned Global  entre $I$ y $T$.
+%\end{itemize}
 
 sujeto a:
 
@@ -228,22 +222,22 @@ sujeto a:
 \section{propuesta}
 \label{sec:propuesta}
 %aca la propuesta no es aplicar directamente el algoritmo, hay que acortar un poquito la parte del smpso, e incluir como marco teorico. Despues vamos a desarrollar la propuesta en si.
-Se utilizaron las pruebas de correlación de Pearson \cite{correlacion}; cuyo índice puede utilizarse para medir el grado de relación o covariación de dos métricas distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas; para determinar la fuerza de las relaciones entre las métricas de la imagen, donde las soluciones potenciales $r_{xy}$ se denominan coeficiente de correlación de las variables $x$ e $y$. Donde $x$ es la Entropía ó Entropía Local e $y$ es el SSIM ó LTG. El valor del  índice de correlación varía en el intervalo [-1,1], entonces:
+Se utilizaron las pruebas de correlación de Pearson \cite{correlacion}; cuyo índice puede utilizarse para medir el grado de relación o covariación de dos métricas distintas relacionadas linealmente,  siempre y cuando ambas sean cuantitativas; para determinar la fuerza de las relaciones entre las métricas de la imagen, donde las soluciones potenciales $\rho_{xy}$ se denominan coeficiente de correlación de las variables $x$ e $y$. Donde $x$ es la Entropía ó Entropía Local e $y$ es el SSIM ó LTG. El valor del  índice de correlación varía en el intervalo [-1,1], entonces:
 
 \begin{equation}\label{eq:gm}
 \resizebox{.3\hsize}{!}
 {
-$-1<r_{xy}<1$ 
+$-1<\rho_{xy}<1$ 
 }
 \end{equation}
 
 Donde:
 \begin{itemize}
-\item Si $r = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.	
-\item Si $0<r<1$, existe una correlación positiva.
-\item Si $r = 0$, no existe relación lineal.
-\item Si $-1<r<0$, existe una correlación negativa.
-\item Si $r = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
+\item Si $\rho = 1$, existe una correlación positiva perfecta. Significa que existe relación directa entre las dos variables, cuando una de ellas aumenta, la otra también lo hace en proporción constante.	
+\item Si $0<\rho<1$, existe una correlación positiva.
+\item Si $\rho= 0$, no existe relación lineal.
+\item Si $-1<\rho<0$, existe una correlación negativa.
+\item Si $\rho = -1$, existe una correlación negativa perfecta. El índice indica que existe una relación inversa entre las dos variables: cuando una de ellas aumenta, la otra disminuye en proporción constante.
 \end{itemize}
 
 Se utiliza el algoritmo $SMPSO$ \cite{nebro2009smpso}, donde las soluciones potenciales $\overrightarrow{x}=(\mathcal{R}_x, \mathcal{R}_y, \mathcal{C})$ se denominan {\it partículas} y el conjunto de partículas $\Omega$ se denomina {\it enjambre}. Cada partícula $\overrightarrow{x_i}$ se actualiza en cada generación $t$ de acuerdo a la siguiente ecuación:
@@ -333,75 +327,44 @@ $r_2$ Min & $0,0$ & $r_2$ max & $1,0$ \\ [1ex]
 \label{table:parametrospso}
 \end{table}
  
-Se realizaron 30 ejecuciones por cada imagen de prueba. Se obtuvieron aproximadamente 300 imágenes soluciones pareto por cada una de ellas. En las \textbf{Fig.2} al \textbf {Fig. 5}  se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/SSIM y Entropía local/SSIM, en las figuras \textbf {Fig. 6}  al \textbf {Fig. 9} se muestran 2 de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/LTG y Entropía local/LTG, además de las imágenes originales como referencias. En \textbf{Table \ref{tabla:correlacionSSIM}} y \textbf{Table \ref{tabla:correlacionLTG}} se muestran las correlaciones entre los pares de métricas utilizados, se puede notar una relación inversa entre ellas; lo cual indica que estos pares de métricas se complementan para mantener el compromiso entre aumento de contraste y minimización de la distorsión. 
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-& Entropía / SSIM & Entropía Local / SSIM\\
-\hline \hline
-Imagen 1 & -0.971902417 & -0.9720935304 \\ \hline
-Imagen 2 & -0.9614426021 & -0.9562885557 \\ \hline
-Imagen 3 & -0.9659256857 & -0.9675449747 \\ \hline
-Imagen 4 & -0.9082717965 & -0.9119592057 \\ \hline
-Imagen 5 & -0.9500009509 & -0.9632835281 \\ \hline
-Imagen 6 & -0.878329477 & -1 \\ \hline
-Imagen 7 & -0.9568185548 & -0.9577921465 \\ \hline
-Imagen 8 & -0.9463678595 & -0.9511655236 \\ \hline
-Imagen 9 & Francia & -0.9419715804 \\ \hline
-Imagen 10 & España & Madrid \\ \hline
-Imagen 11 & -0.964409767 & -0.981682033 \\ \hline
-Imagen 12 & -0.9762372 & -0.981682033 \\ \hline
-Imagen 13 & -0.96055736 & -0.98899815 \\ \hline
-Imagen 14 & -0.952364356 & -0.98963251 \\ \hline
-Imagen 15 & -0.96271548 & -0.984408924 \\ \hline
-Imagen 16 & -0.9644443585 & -0.9777913389 \\ \hline
-Imagen 17 & -0.9632568326 & -0.98528073 \\ \hline
-Imagen 18 & -0.9515086904 & -0.9542339589 \\ \hline
-Imagen 19 & -0.9628701082 & -0.973993699 \\ \hline
-Imagen 20 & -0.9328792106 & -0.9628425557 \\ \hline
-\end{tabular}
-\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, SSIM.}
-\label{tabla:correlacionSSIM}
-\end{center}
-\end{table}
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-& Entropía / LTG & Entropía Local / LTG\\
-\hline \hline
-Imagen 1 & -0.9524903286 & -0.9430095655 \\ \hline
-Imagen 2 & -0.9459065618 & -0.950762428 \\ \hline
-Imagen 3 & -0.9695630212 & -0.9668927088 \\ \hline
-Imagen 4 & -0.7652843007 & -0.7775670089 \\ \hline
-Imagen 5 & -0.9005032349 & -0.8895061065 \\ \hline
-Imagen 6 & -0.9580856193 & -0.9635128854 \\ \hline
-Imagen 7 & -0.9415491215 & -0.9547647068 \\ \hline
-Imagen 8 & España & -0.9415551566 \\ \hline
-Imagen 9 & Francia & -0.9149494054 \\ \hline
-Imagen 10 & España & Madrid \\ \hline
-Imagen 11 & -0.948546026 & -0.975410553\\ \hline
-Imagen 12 & -0.95824362 & -0.97025453 \\ \hline
-Imagen 13 & -0.92035706 & -0.98068587 \\ \hline
-Imagen 14 & -0.939319901 & -0.932724602 \\ \hline
-Imagen 15 & -0.953336463 & -0.95304087  \\ \hline
-Imagen 16 & -0.948470373 & -0.9590976409 \\ \hline
-Imagen 17 & -0.943960614 & -0.962423285 \\ \hline
-Imagen 18 & -0.9067494894 & -0.9055475635 \\ \hline
-Imagen 19 & -0.9521232551 & -0.9492860349 \\ \hline
-Imagen 20 & -0.9333793252 & -0.9328576521 \\ \hline
-\end{tabular}
-\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, LTG}
-\label{tabla:correlacionLTG}
-\end{center}
-\end{table}
+Se realizaron 30 ejecuciones por cada imagen de prueba. Se obtuvieron aproximadamente 300 imágenes soluciones pareto por cada una de ellas. En la \textbf{Fig.2} se muestran dos de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía/SSIM, en la figura \textbf {Fig. 3}, dos de las soluciones que se encuentran en el conjunto pareto para las métricas Entropía local/SSIM y en la \textbf{Fig.4} dos de las soluciones para las métricas Entropía local/LTG, además de las imágenes originales como referencias. En \textbf{Table \ref{tabla:correlacion}} se muestran las correlaciones entre los pares de métricas utilizados, se puede notar una relación inversa entre ellas; lo cual indica que estos pares de métricas se complementan para mantener el compromiso entre aumento de contraste y minimización de la distorsión. 
 
 \section{conclusiones}
 \label{sec:conclusion}
 Se presentaron 4 pares de métricas, Entropía/SSIM, Entropía local/SSIM, Entropía/LTG y Entropía local/LTG, utilizados junto a un algoritmo metaheurístico y el algoritmo CLAHE, con el objetivo de obtener las métricas que maximicen de manera simultánea el contraste y minimicen la distorsión de la imagen. Los resultados experimentales obtenidos en \textbf{Table \ref{tabla:promcorrelacion}} demuestran que los pares de métricas Entropía local/SSIM demuestran ser los más contradictorios según la correlación obtenida.
+
+\onecolumn
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{||l|c|c|c|c|}
+\hline
+& Entropía / SSIM & Entropía Local / SSIM & Entropía / LTG & Entropía Local / LTG\\
+\hline \hline
+Imagen 1 & -0.9719 & \textbf{-0.9721} & -0.9525 & -0.9430 \\ \hline
+Imagen 2 & \textbf{-0.9614} & -0.9563 & -0.9459 & -0.9508 \\ \hline
+Imagen 3 & -0.9659 & \textbf{-0.9675} & -0.9696 & -0.9669 \\ \hline
+Imagen 4 & -0.9083 & \textbf{-0.9119} & -0.7653 & -0.7776 \\ \hline
+Imagen 5 & -0.9500 & \textbf{-0.9633} & -0.9005 & -0.8895 \\ \hline
+Imagen 6 & -0.8784 & \textbf{-1} & -0.9581 & -0.9635 \\ \hline
+Imagen 7 & -0.9568 & \textbf{-0.9578} & -0.9415 & -0.9548 \\ \hline
+Imagen 8 & -0.9464 & \textbf{-0.9512} & España & -0.9416 \\ \hline
+Imagen 9 & Francia & -0.9420 & Francia & -0.9149 \\ \hline
+Imagen 10 & España & Madrid & España & Madrid \\ \hline
+Imagen 11 & -0.9644 & \textbf{-0.9812} & -0.9485 & -0.9754 \\ \hline
+Imagen 12 & -0.9762 & \textbf{-0.9817} & -0.9582 & -0.9703 \\ \hline
+Imagen 13 & -0.9606 & \textbf{-0.9889} & -0.9204 & -0.9807 \\ \hline
+Imagen 14 & -0.9524 & \textbf{-0.9896} & -0.9393 & -0.9327 \\ \hline
+Imagen 15 & -0.9627 & \textbf{-0.9844} & -0.9533 & -0.9530 \\ \hline
+Imagen 16 & -0.9644 & \textbf{-0.9778} & -0.9485 & -0.9591 \\ \hline
+Imagen 17 & -0.9633 & \textbf{-0.9853} & -0.9439 & -0.9624 \\ \hline
+Imagen 18 & -0.9515 & \textbf{-0.9542} & -0.9067 & -0.9055 \\ \hline
+Imagen 19 & -0.9629 & \textbf{-0.9740} & -0.9521 & -0.9493 \\ \hline
+Imagen 20 & -0.9329 & \textbf{ -0.9628} & -0.9338 & -0.9329 \\ \hline
+\end{tabular}
+\caption{Resultados de la correlación de Pearson usando Entropía, Entropía Local, SSIM y LTG}
+\label{tabla:correlacion}
+\end{center}
+\end{table}
 
 \begin{table}[htbp]
 \begin{center}
@@ -419,8 +382,11 @@ Entropía Local / LTG & -0 \\ \hline
 \end{center}
 \end{table}
 
+%hacer una sola tabla de resultados, marcados en negrita los mejores valores, redondear hasta 4 decimales.
+%dejar solo imagenes entropialocal/ssim, entropia/ssim, entropialocalLtg
+
 %figuaras entropia/ssim
-\onecolumn
+
 \noindent\begin{minipage}[b]{1.0\linewidth}
   \centering
    
@@ -445,6 +411,9 @@ Entropía Local / LTG & -0 \\ \hline
     \label{fig:resultado1}
   \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/SSIM. }
 
+\end{minipage}
+
+\begin{minipage}[t]{0.5\linewidth}  
 \end{minipage}
 
 %figuaras entropia local/ssim
@@ -474,84 +443,35 @@ Entropía Local / LTG & -0 \\ \hline
 
 \end{minipage}
 
-%figuaras entropia/ssim
-\noindent\begin{minipage}[b]{1.0\linewidth}
-  
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6.png}
-   		\captionof{subfigure}{Imagen original}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6_2_2_0-031886.png}
-   		\captionof{subfigure}{Imagen resultante. $SSIM=0.594634$ $\mathscr{H}=6.121506$}
-  	\end{minipage}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ssim/imagen6_2_19_1.png}
-   		\captionof{subfigure}{Imagen resultante. $SSIM=0.457938$ $\mathscr{H}=7.864396$}
-  	\end{minipage}
-  \vspace{0.5cm}
-    \label{fig:resultado3}
-  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/SSIM. }
-
+\begin{minipage}[t]{0.5\linewidth}  
 \end{minipage}
-
-%figuaras entropia local/ssim
-\noindent\begin{minipage}[b]{1.0\linewidth}
-  \centering
-   
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6.png}
-   		\captionof{subfigure}{Imagen original}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6_2_19_1.png}
-   		\captionof{subfigure}{Imagen resultante. $SSIM=0.457938$ $\mathscr{H}=7.864396$}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ssim/imagen6_2_11_0-015063.png}
-   		\captionof{subfigure}{Imagen resultante. $SSIM=0.6229193$ $\mathscr{H}=6.174268$}
-  	\end{minipage}
-  \vspace{0.5cm}
-    \label{fig:resultado4}
-  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/SSIM. }
-
-\end{minipage}
- 
- %figuras entropia/ltg
-\noindent\begin{minipage}[b]{1.0\linewidth}
-  \centering
-   
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3.png}
-   		\captionof{subfigure}{Imagen original}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_210_2_0-077765.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.766271$ $\mathscr{H}=7.98540$}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_29_2_1.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.785029$ $\mathscr{H}=7.984607$}
-  	\end{minipage}
-  \vspace{0.5cm}
-    \label{fig:resultado5}
-  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/LTG. }
-
-\end{minipage}
+% 
+% %figuras entropia/ltg
+%\noindent\begin{minipage}[b]{1.0\linewidth}
+%  \centering
+%   
+%   \begin{minipage}[t]{0.3\linewidth}  
+%   		\centering
+%        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3.png}
+%   		\captionof{subfigure}{Imagen original}
+%  	\end{minipage}
+%  \hspace{1pt}
+%   \begin{minipage}[t]{0.3\linewidth}  
+%   		\centering
+%        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_210_2_0-077765.png}
+%   		\captionof{subfigure}{Imagen resultante. $LTG=0.766271$ $\mathscr{H}=7.98540$}
+%  	\end{minipage}
+%  \hspace{1pt}
+%   \begin{minipage}[t]{0.3\linewidth}  
+%   		\centering
+%        \includegraphics[width=3.5cm]{Figures/entropia_normal_ltg/imagen3_29_2_1.png}
+%   		\captionof{subfigure}{Imagen resultante. $LTG=0.785029$ $\mathscr{H}=7.984607$}
+%  	\end{minipage}
+%  \vspace{0.5cm}
+%    \label{fig:resultado5}
+%  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/LTG. }
+%
+%\end{minipage}
 
 %figuras entropia local/ltg
 \noindent\begin{minipage}[b]{1.0\linewidth}
@@ -580,61 +500,8 @@ Entropía Local / LTG & -0 \\ \hline
 
 \end{minipage}
 
-%figuras entropia/ltg
-\noindent\begin{minipage}[b]{1.0\linewidth}
-  
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6.png}
-   		\captionof{subfigure}{Imagen original}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6_2_19_1.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.806168$ $\mathscr{H}=7.864343$}
-  	\end{minipage}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_normal_ltg/imagen6_2_18_0.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.999906$ $\mathscr{H}=5.87327$}
-  	\end{minipage}
-  \vspace{0.5cm}
-    \label{fig:resultado7}
-  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía/LTG. }
-
-\end{minipage}
-
-%figuras entropia local/ltg
-\noindent\begin{minipage}[b]{1.0\linewidth}
-  \centering
-   
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6.png}
-   		\captionof{subfigure}{Imagen original}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6_2_15_1.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.811433$ $\mathscr{H}=7.861332$}
-  	\end{minipage}
-  \hspace{1pt}
-   \begin{minipage}[t]{0.3\linewidth}  
-   		\centering
-        \includegraphics[width=3cm]{Figures/entropia_local_ltg/imagen6_2_16_1.png}
-   		\captionof{subfigure}{Imagen resultante. $LTG=0.810728$ $\mathscr{H}=7.864276$}
-  	\end{minipage}
-  \vspace{0.5cm}
-    \label{fig:resultado8}
-  \captionof{figure}{Resultados de PSO-CLAHE multiobjetivo Entropía Local/LTG. }
-\end{minipage}
-
  \twocolumn
  \bibliographystyle{IEEEbib}
  \bibliography{refs1}
-
-
 
 \end{document}
