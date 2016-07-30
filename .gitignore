@@ -1,4 +1,11 @@
 #ignorar imagenes
-
+*.png
 #ignorar logs
 *.log*
+#ignorar archivos generados por jmetal
+*FUN*
+*VAR*
+*.class
+/proyecto pso_clahe/Nuevo Tesis/dist/
+/proyecto pso_clahe/pso paralelo/nbproject/private/
+/proyecto pso_clahe/pso paralelo/build/
