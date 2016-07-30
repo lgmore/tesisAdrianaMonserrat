@@ -15,15 +15,6 @@ public class Solution implements Serializable {
     private double fitness_;//solo usado por algunos algoritmos
     private double overallConstraintViolation_;//Stores the overall constraint violation of the solution.
     private int numberOfViolatedConstraints_;//Stores the number of constraints violated by the solution.
-    private int corridas;
-
-    public int getCorridas() {
-        return corridas;
-    }
-
-    public void setCorridas(int corridas) {
-        this.corridas = corridas;
-    }
 
     public Solution() {        
         problem_ = null;

@@ -1,11 +1,5 @@
 package jmetal.metaheuristics.smpso;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jmetal.core.*;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
@@ -14,14 +8,18 @@ import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.comparators.CrowdingDistanceComparator;
 import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.wrapper.XReal;
-import org.apache.log4j.PropertyConfigurator;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SMPSOTesis extends Algorithm {
 
     private int tamañoEnjambre;//numero de particulas usadas
     private int tamañoLideres;//tamaño maximo del archivo
     private int maximoIteraciones;//numero maximo de iteraciones
-    public int iteracion;//numero de iteracion actual
+    private int iteracion;//numero de iteracion actual
     private SolutionSet particulas;//particulas
     private Solution[] mejoresLocales;//soluciones locales
     private CrowdingArchive mejoresGlobales;//lideres del enjambre (mejores globales)
@@ -45,14 +43,6 @@ public class SMPSOTesis extends Algorithm {
     private double velocidadMaxima[];//maximo para velocidad
     private double velocidadMinima[];//minimo para velocidad
     boolean exito;//bandera de exito del algoritmo
-        static Logger log;
-
-    static {
-        PropertyConfigurator.configure("logger.properties");
-        log = Logger.getLogger(SMPSOTesis.class.getName());
-        //setDimensionesImagen();
-
-    }
 
     public SMPSOTesis(Problem problema) {
         super(problema);
@@ -178,16 +168,14 @@ public class SMPSOTesis extends Algorithm {
     @Override
     public SolutionSet execute() throws JMException, ClassNotFoundException {
         iniciarParametros();
-        Date inicio = new Date();
-        
-        System.out.println(" Empezó: "+inicio);
+        System.out.println("Empezó: "+Calendar.getInstance().getTime().toString());
         //->Step 1 (and 3) poblacion inicial, creamos cada una de las particulas con un valor aleatorio para cada una
         for (int i = 0; i < tamañoEnjambre; i++) {
             Solution particula = new Solution(problem_);//crea la particula con valores random en sus variables, del tipo de solucion de la particula, para este caso es "Real"
             problem_.evaluate(particula);//evaluacion de la particula, pondra valores en sus objetivos
             particulas.add(particula);//se añade al enjambre
-          //  System.out.println("Particula "+i+". Entropia: "+particula.getObjective(0)+". SSIM: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
-          //  System.out.println("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
+            System.out.println("Particula "+i+". Entropia: "+particula.getObjective(0)+". SSIM: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
+            System.out.println("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
             //System.out.println("Particula "+i+". Entropia*SSIM: "+particula.getObjective(0));
         }
         //-> Step2. iniciar velocidad de cada particula a 0. Matriz cantidad de particulas x cantidad de variables
@@ -209,9 +197,8 @@ public class SMPSOTesis extends Algorithm {
         //Crowding the mejoresGlobales, distancia entre los lideres, se calcula en base a los valores de sus objetivos y los de sus vecinos, ordenados de forma ascendente
         distance_.crowdingDistanceAssignment(mejoresGlobales, problem_.getNumberOfObjectives());
         //-> Step 7. Iteraciones
-       while (iteracion < maximoIteraciones) {
-            log.info("Iteración: "+iteracion+", "+Calendar.getInstance().getTime().toString());
-            System.out.println("ITERACIONNNNNNNNNNNNNN: "+iteracion);
+        while (iteracion < maximoIteraciones) {
+            System.out.println("Iteración: "+iteracion+", "+Calendar.getInstance().getTime().toString());
             try {
                 calcularVelocidad(iteracion, maximoIteraciones);
             } catch (IOException ex) {
@@ -223,17 +210,14 @@ public class SMPSOTesis extends Algorithm {
             for (int i = 0; i < particulas.size(); i++) {//por cada particula
                 Solution particula = particulas.get(i);
                 problem_.evaluate(particula);//evaluar funciones del problema
-              //  System.out.println("Particula "+i+". Entropia: "+particula.getObjective(0)+". SSIM: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
-              //  System.out.println("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
+                System.out.println("Particula "+i+". Entropia: "+particula.getObjective(0)+". SSIM: "+particula.getObjective(1)+". E*SSIM="+particula.getObjective(0)*particula.getObjective(1));
+                System.out.println("Particula "+i+". X: "+particula.getDecisionVariables()[0].toString()+". Y: "+particula.getDecisionVariables()[1].toString()+". Clip: "+particula.getDecisionVariables()[2].toString());
                 //System.out.println("Particula "+i+". Entropia*SSIM: "+particula.getObjective(0));
             }
             //Actualizar el archivo de lideres no dominados, solo entran los q no son dominados, los dominados se van quitando de la lista
             for (int i = 0; i < particulas.size(); i++) {
                 Solution particula = new Solution(particulas.get(i));
-                particula.setCorridas(iteracion);
                 mejoresGlobales.add(particula);
-            //    System.out.println("MEJORES GLOBALES entropia "+particula.getObjective(0));
-            //    System.out.println("MEJORES GLOBALES LTG "+particula.getObjective(1));
             }
             //Actualizar los mejores locales que ven cada una de las particulas (valores anteriores)
             for (int i = 0; i < particulas.size(); i++) {
@@ -241,20 +225,12 @@ public class SMPSOTesis extends Algorithm {
                 if (flag != 1) {//si es 1, best[i] domina a la particula, sino, son iguales o la particula domina a best[i], solo debe entrar en caso que best[i] es dominada por la particula o sean iguales
                     Solution particula = new Solution(particulas.get(i));
                     mejoresLocales[i] = particula;
-               //     System.out.println("MEJORES locales entropia "+particula.getObjective(0));
-                 //   System.out.println("MEJORES locales LTG "+particula.getObjective(1));
                 }
             }
             //se vuelve a computar la distancia entre los lideres
             distance_.crowdingDistanceAssignment(mejoresGlobales, problem_.getNumberOfObjectives());
             iteracion++;//aumentamos la iteracion
         }
-         Date fin = new Date();
-         long diferencia = (fin.getTime() - inicio.getTime()); 
-         System.out.println(" TOTALLLLLLLLL : " +(diferencia /(60*1000)%60));
-         
-        
         return mejoresGlobales;
-       
     }
 }
